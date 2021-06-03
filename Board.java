@@ -7,37 +7,37 @@ public class Board {
         for(int i = 0; i < fields.length; i++){
             fields[i] = new Field((i%8)+1, 8-i/8);
         }
-        setFigures();
+        setPieces();
     }
 
-    private void setFigures(){
+    private void setPieces(){
         for(int i = 0; i < fields.length; i++){
             if(i==0 || i == 7)
-                fields[i].setFigureAtField(new Rook("Black"));
+                fields[i].setPieceAtField(new Rook("Black"));
             else if (i == 56 || i == 63)
-                fields[i].setFigureAtField(new Rook("White"));
+                fields[i].setPieceAtField(new Rook("White"));
             else if (i == 1 || i == 6)
-                fields[i].setFigureAtField(new Knight("Black"));
+                fields[i].setPieceAtField(new Knight("Black"));
             else if(i == 57 || i == 62)
-                fields[i].setFigureAtField(new Knight("White"));
+                fields[i].setPieceAtField(new Knight("White"));
             else if(i == 2 || i == 5)
-                fields[i].setFigureAtField(new Bishop("Black"));
+                fields[i].setPieceAtField(new Bishop("Black"));
             else if(i == 58 || i == 61)
-                fields[i].setFigureAtField(new Bishop("White"));
+                fields[i].setPieceAtField(new Bishop("White"));
             else if(i == 3)
-                fields[i].setFigureAtField(new Queen("Black"));
+                fields[i].setPieceAtField(new Queen("Black"));
             else if(i == 59)
-                fields[i].setFigureAtField(new Queen("White"));
+                fields[i].setPieceAtField(new Queen("White"));
             else if(i == 4)
-                fields[i].setFigureAtField(new King("Black"));
+                fields[i].setPieceAtField(new King("Black"));
             else if(i == 60)
-                fields[i].setFigureAtField(new King("White"));
+                fields[i].setPieceAtField(new King("White"));
             else if(i > 7 && i < 16)
-                fields[i].setFigureAtField(new Pawn("Black"));
+                fields[i].setPieceAtField(new Pawn("Black"));
             else if(i > 47 && i < 56)
-                fields[i].setFigureAtField(new Pawn("White"));
+                fields[i].setPieceAtField(new Pawn("White"));
             else
-                fields[i].setFigureAtField(null);
+                fields[i].setPieceAtField(null);
         }
     }
 
@@ -49,7 +49,7 @@ public class Board {
                 System.out.print((8-i/8) + "  ");
             }
 
-            fields[i].printFigure();
+            fields[i].printPiece();
             System.out.print(" ");
         }
         System.out.println();
@@ -105,12 +105,12 @@ public class Board {
             return fields[8*(8-y)+x-1];
     }
 
-    public boolean isMyFigure(String move, String color){
-        if(getField(move) == null || getField(move).getFigureAtField() == null){
+    public boolean isMyPiece(String move, String color){
+        if(getField(move) == null || getField(move).getPieceAtField() == null){
             return false;
         }
 
-        else if(getField(move).getFigureAtField().getColor() != color){
+        else if(getField(move).getPieceAtField().getColor() != color){
             return false;
         }
 
@@ -124,7 +124,7 @@ public class Board {
         }
 
 
-        else if(getField(move).getFigureAtField() != null && getField(move).getFigureAtField().getColor() == color)
+        else if(getField(move).getPieceAtField() != null && getField(move).getPieceAtField().getColor() == color)
             return false;
 
         else

@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class King extends Figure{
+public class King extends Piece{
     boolean haveMoved = false; //Did King moved before?
 
     public King(String color){

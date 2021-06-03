@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Bishop extends Figure{
+public class Bishop extends Piece{
     public Bishop(String color){
         super("bishop", color);
     }
@@ -14,7 +14,7 @@ public class Bishop extends Figure{
 
         else {
             for (int i = 1; i < fields.size()-1; i++){
-                if(fields.get(i).getFigureAtField() != null)
+                if(fields.get(i).getPieceAtField() != null)
                     return false;
             }
             return true;

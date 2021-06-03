@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Queen extends Figure{
+public class Queen extends Piece{
     public Queen(String color){
         super("queen", color);
     }
@@ -12,7 +12,7 @@ public class Queen extends Figure{
 
         if((horizontalMove == 0 && verticalMove != 0) || (horizontalMove != 0 && verticalMove == 0)){ //Move in line
             for(int i = 1; i < fields.size()-1; i++){ //Is way clear
-                if(fields.get(i).getFigureAtField() != null)
+                if(fields.get(i).getPieceAtField() != null)
                     return false;
             }
             return true;
@@ -20,7 +20,7 @@ public class Queen extends Figure{
 
         else if(Math.abs(verticalMove) == Math.abs(horizontalMove)){ //Move diagonally
             for(int i = 1; i < fields.size()-1; i++){ //Is way clear
-                if(fields.get(i).getFigureAtField() != null)
+                if(fields.get(i).getPieceAtField() != null)
                     return false;
             }
             return true;

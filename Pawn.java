@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Pawn extends Figure{
+public class Pawn extends Piece{
     boolean haveMoved = false; //Did pawn moved before?
     int moveDirection;
 
@@ -22,7 +22,7 @@ public class Pawn extends Figure{
         if (horizontalMove == 0) { //Pawn want to move in vertical axis
             return moveVertical(verticalMove, fields);
         }
-        else if (horizontalMove == 1 || horizontalMove == -1) { //Pawn is trying to move diagonally to capture figure
+        else if (horizontalMove == 1 || horizontalMove == -1) { //Pawn is trying to move diagonally to capture piece
             return capture(verticalMove, fields);
         }
         else return false;
@@ -30,13 +30,13 @@ public class Pawn extends Figure{
 
     private boolean moveVertical(int verticalMove, ArrayList<Field> fields){
         if (!haveMoved) { //Pawn didn't move before
-            if (verticalMove == moveDirection && fields.get(fields.size()-1).getFigureAtField() == null) { //Pawn want to move one or two fields and these fields are empty
+            if (verticalMove == moveDirection && fields.get(fields.size()-1).getPieceAtField() == null) { //Pawn want to move one or two fields and these fields are empty
                 haveMoved = true;
                 return true;
             }
             else if(verticalMove == 2*moveDirection ){
                 for(int i = 1; i < fields.size(); i++){
-                    if(fields.get(i).getFigureAtField() != null)
+                    if(fields.get(i).getPieceAtField() != null)
                         return false;
                 }
                 haveMoved = true;
@@ -45,7 +45,7 @@ public class Pawn extends Figure{
             else return false;
         }
         else {
-            if (verticalMove == moveDirection && fields.get(fields.size()-1).getFigureAtField() == null){ //Pawn moved before and now wants to go on next field
+            if (verticalMove == moveDirection && fields.get(fields.size()-1).getPieceAtField() == null){ //Pawn moved before and now wants to go on next field
                 promotion(fields);
                 return true;
             }
@@ -55,10 +55,10 @@ public class Pawn extends Figure{
     }
 
     private boolean capture(int verticalMove, ArrayList<Field> fields){
-        if (fields.get(fields.size()-1).getFigureAtField() == null)
+        if (fields.get(fields.size()-1).getPieceAtField() == null)
             return false;
         if (verticalMove == moveDirection) {
-            if (fields.get(fields.size()-1).getFigureAtField().getColor() == getColor())
+            if (fields.get(fields.size()-1).getPieceAtField().getColor() == getColor())
                 return false;
             else{
                 promotion(fields);
@@ -72,25 +72,25 @@ public class Pawn extends Figure{
             return;
         else{
             Scanner input = new Scanner(System.in);
-            String figure;
+            String piece;
             System.out.println("PROMOTION!");
             do{
-                System.out.print("Choose new figure: ");
-                figure = input.next();
-            }while (!isFigure(figure.charAt(0)));
+                System.out.print("Choose new piece: ");
+                piece = input.next();
+            }while (!isPiece(piece.charAt(0)));
 
-            switch (figure.charAt(0)){
+            switch (piece.charAt(0)){
                 case 'k':
-                    field.get(0).setFigureAtField(new Knight(getColor()));
+                    field.get(0).setPieceAtField(new Knight(getColor()));
                     break;
                 case 'b':
-                    field.get(0).setFigureAtField(new Bishop(getColor()));
+                    field.get(0).setPieceAtField(new Bishop(getColor()));
                     break;
                 case 'r':
-                    field.get(0).setFigureAtField(new Rook(getColor()));
+                    field.get(0).setPieceAtField(new Rook(getColor()));
                     break;
                 case 'q':
-                    field.get(0).setFigureAtField(new Queen(getColor()));
+                    field.get(0).setPieceAtField(new Queen(getColor()));
                     break;
             }
         }
@@ -104,7 +104,7 @@ public class Pawn extends Figure{
         else return false;
     }
 
-    private boolean isFigure(char fig){
+    private boolean isPiece(char fig){
         switch (fig){
             case 'k': case 'b': case 'r': case 'q':
                 return true;

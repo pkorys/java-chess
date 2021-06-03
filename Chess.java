@@ -14,7 +14,7 @@ public class Chess {
         startGame();
         while (true) {
             fieldsToTravel.clear();
-            chooseFigure();
+            choosePiece();
             changeTurn();
             playArena.printBoard();
         }
@@ -28,13 +28,13 @@ public class Chess {
     }
 
 
-    public static void chooseFigure(){
+    public static void choosePiece(){
         String move;
         System.out.println("-=-=-=-" + turn + " turn-=-=-=-");
         do{
-            System.out.print("Choose figure to move: ");
+            System.out.print("Choose piece to move: ");
             move = input.next();
-        }while(!playArena.isMyFigure(move, turn));
+        }while(!playArena.isMyPiece(move, turn));
         fieldsToTravel.add(playArena.getField(move));
         makeMove();
     }
@@ -51,9 +51,9 @@ public class Chess {
             fieldsToTravel.add(playArena.getField(move));
             playArena.addFields(fieldsToTravel);
 
-            if(fieldsToTravel.get(0).getFigureAtField().canMove(fieldsToTravel)){ //Make move
-                fieldsToTravel.get(fieldsToTravel.size()-1).setFigureAtField(fieldsToTravel.get(0).getFigureAtField());
-                fieldsToTravel.get(0).setFigureAtField(null);
+            if(fieldsToTravel.get(0).getPieceAtField().canMove(fieldsToTravel)){ //Make move
+                fieldsToTravel.get(fieldsToTravel.size()-1).setPieceAtField(fieldsToTravel.get(0).getPieceAtField());
+                fieldsToTravel.get(0).setPieceAtField(null);
             }
             else {
                 Field temp = fieldsToTravel.get(0);
@@ -64,7 +64,7 @@ public class Chess {
         }
         else {
             fieldsToTravel.clear();
-            chooseFigure();
+            choosePiece();
         }
     }
 

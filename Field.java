@@ -1,27 +1,27 @@
 public class Field {
-    private Figure figureAtField;
+    private Piece pieceAtField;
     final private int xPos;
     final private int yPos;
 
     public Field(int xPos, int yPos) {
         this.xPos = xPos;
         this.yPos = yPos;
-        figureAtField = null;
+        pieceAtField = null;
     }
 
-    public Figure getFigureAtField() {
-        return figureAtField;
+    public Piece getPieceAtField() {
+        return pieceAtField;
     }
 
-    public void setFigureAtField(Figure figureAtField) {
-        this.figureAtField = figureAtField;
+    public void setPieceAtField(Piece pieceAtField) {
+        this.pieceAtField = pieceAtField;
     }
 
-    public void printFigure(){ //Print colored figure symbol or space if field is empty
-        if(figureAtField == null)
+    public void printPiece(){ //Print colored piece symbol or space if field is empty
+        if(pieceAtField == null)
             System.out.print(" ");
         else
-            System.out.print(figureAtField.getSymbol());
+            System.out.print(pieceAtField.getSymbol());
     }
 
     public int[] getPos(){
