@@ -7,12 +7,14 @@ public class Piece {
     private String pieceType;
     private String pieceColor;
     private String pieceSymbol;
-
+    protected static Board chessboard;
+    protected Field myPosition;
     ArrayList<Field> fieldsToMove;
-    public Piece(String pieceType, String pieceColor) {
+
+    public Piece(String pieceType, String pieceColor, Field myPosition) {
         this.pieceType = pieceType;
         this.pieceColor = pieceColor;
-
+        this.myPosition = myPosition;
 
         if(pieceColor == "Black")
             pieceSymbol = changeTextColorOnBlack + pieceType.charAt(0) + changeTextColorOnWhite;
@@ -20,8 +22,8 @@ public class Piece {
             pieceSymbol = changeTextColorOnWhite + pieceType.charAt(0);
     }
 
-    public String getPieceType() {
-        return pieceType;
+    public static void setChessboard(Board board){
+        chessboard = board;
     }
 
     public String getPieceColor() {
@@ -30,6 +32,10 @@ public class Piece {
 
     public String getPieceSymbol() {
         return pieceSymbol;
+    }
+
+    public void setMyPosition(Field myPosition) {
+        this.myPosition = myPosition;
     }
 
     public boolean canMove(ArrayList<Field> fieldsToMove) {
@@ -56,5 +62,22 @@ public class Piece {
                 return false;
         }
         return true;
+    }
+
+    protected void checkFields(){
+
+    }
+
+    protected void uncheckFields(){
+    }
+
+    protected void checkIfFieldExists(int horizontal, int vertical){
+        if(chessboard.findField(horizontal, vertical) != null)
+            chessboard.findField(horizontal, vertical).setPieceCheckingMe(this);
+    }
+
+    protected void uncheckIfFieldExists(int horizontal, int vertical){
+        if(chessboard.findField(horizontal, vertical) != null)
+            chessboard.findField(horizontal, vertical).removePieceCheckigMe(this);
     }
 }

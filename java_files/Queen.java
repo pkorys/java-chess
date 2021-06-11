@@ -3,8 +3,8 @@ import java.util.ArrayList;
 public class Queen extends Piece {
     ArrayList<Field> fieldsToMove;
 
-    public Queen(String color){
-        super("queen", color);
+    public Queen(String color, Field myPosition){
+        super("queen", color, myPosition);
     }
 
     @Override

@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class Chess {
@@ -23,7 +22,9 @@ public class Chess {
     private static void startGame(){
         chessboard.setFields();
         chessboard.printBoard();
+        Piece.setChessboard(chessboard);
         turn = "White";
+        chessboard.makeFirstChecking();
     }
 
 
@@ -32,7 +33,7 @@ public class Chess {
         System.out.println("-=-=-=-" + turn + " turn-=-=-=-");
         do{
             System.out.print("Choose figure to move: ");
-            move = input.next().toLowerCase();
+            move = input.next();
         }while(!chessboard.isMyFigure(move, turn));
         fieldsToTravel.add(chessboard.getField(move));
         makeMove();
@@ -42,7 +43,7 @@ public class Chess {
         String move;
         do{
             System.out.print("Choose field to move: ");
-            move = input.next().toLowerCase();
+            move = input.next();
             if(move.charAt(0) == 'q')
                 break;
         }while(!chessboard.canIMoveTo(move, turn));
@@ -51,8 +52,7 @@ public class Chess {
             chessboard.addFields(fieldsToTravel);
 
             if(fieldsToTravel.get(0).getPieceAtField().canMove(fieldsToTravel)){
-                fieldsToTravel.get(fieldsToTravel.size()-1).setPieceAtField(fieldsToTravel.get(0).getPieceAtField());
-                fieldsToTravel.get(0).setPieceAtField(null);
+                swapPieces();
             }
             else
                 tryMakeMoveAgain();
@@ -60,6 +60,12 @@ public class Chess {
         else
             quitMove();
 
+    }
+    private static void swapPieces(){
+        fieldsToTravel.get(0).getPieceAtField().uncheckFields();
+        fieldsToTravel.get(fieldsToTravel.size()-1).setPieceAtField(fieldsToTravel.get(0).getPieceAtField());
+        fieldsToTravel.get(0).setPieceAtField(null);
+        fieldsToTravel.get(fieldsToTravel.size()-1).getPieceAtField().checkFields();
     }
 
     private static void quitMove(){

@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
 public class Knight extends Piece {
-    public Knight(String color){
-        super("knight", color);
+    public Knight(String color, Field myPosition){
+        super("knight", color, myPosition);
     }
 
     @Override

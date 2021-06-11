@@ -5,8 +5,8 @@ public class Rook extends Piece {
 
     ArrayList<Field> fieldsToMove;
 
-    public Rook(String color){
-        super("rook", color);
+    public Rook(String color, Field myPosition){
+        super("rook", color, myPosition);
     }
 
     @Override

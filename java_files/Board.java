@@ -13,29 +13,29 @@ public class Board {
     private void setPieces(){
         for(int i = 0; i < fields.length; i++){
             if(i==0 || i == 7)
-                fields[i].setPieceAtField(new Rook("Black"));
+                fields[i].setPieceAtField(new Rook("Black", fields[i]));
             else if (i == 56 || i == 63)
-                fields[i].setPieceAtField(new Rook("White"));
+                fields[i].setPieceAtField(new Rook("White", fields[i]));
             else if (i == 1 || i == 6)
-                fields[i].setPieceAtField(new Knight("Black"));
+                fields[i].setPieceAtField(new Knight("Black", fields[i]));
             else if(i == 57 || i == 62)
-                fields[i].setPieceAtField(new Knight("White"));
+                fields[i].setPieceAtField(new Knight("White", fields[i]));
             else if(i == 2 || i == 5)
-                fields[i].setPieceAtField(new Bishop("Black"));
+                fields[i].setPieceAtField(new Bishop("Black", fields[i]));
             else if(i == 58 || i == 61)
-                fields[i].setPieceAtField(new Bishop("White"));
+                fields[i].setPieceAtField(new Bishop("White", fields[i]));
             else if(i == 3)
-                fields[i].setPieceAtField(new Queen("Black"));
+                fields[i].setPieceAtField(new Queen("Black", fields[i]));
             else if(i == 59)
-                fields[i].setPieceAtField(new Queen("White"));
+                fields[i].setPieceAtField(new Queen("White", fields[i]));
             else if(i == 4)
-                fields[i].setPieceAtField(new King("Black"));
+                fields[i].setPieceAtField(new King("Black", fields[i]));
             else if(i == 60)
-                fields[i].setPieceAtField(new King("White"));
+                fields[i].setPieceAtField(new King("White", fields[i]));
             else if(i > 7 && i < 16)
-                fields[i].setPieceAtField(new Pawn("Black"));
+                fields[i].setPieceAtField(new Pawn("Black", fields[i]));
             else if(i > 47 && i < 56)
-                fields[i].setPieceAtField(new Pawn("White"));
+                fields[i].setPieceAtField(new Pawn("White", fields[i]));
             else
                 fields[i].setPieceAtField(null);
         }
@@ -93,7 +93,9 @@ public class Board {
     }
 
     public Field findField(int x, int y){
-        if(x == -1 || y == -1)
+        if(x < 1 || y < 1)
+            return null;
+        else if(x > 8 || y > 8)
             return null;
         else
             return fields[8*(8-y)+x-1];
@@ -122,6 +124,13 @@ public class Board {
 
         else
             return true;
+    }
+
+    public void makeFirstChecking(){
+        for (int i =0; i < fields.length; i++){
+            if(fields[i].getPieceAtField()!= null)
+                fields[i].getPieceAtField().checkFields();
+        }
     }
 
     public void addFields(ArrayList<Field> fieldsToTravel) {

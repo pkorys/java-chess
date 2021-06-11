@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
 public class Bishop extends Piece {
-    public Bishop(String color){
-        super("bishop", color);
+    public Bishop(String color, Field myPosition){
+        super("bishop", color, myPosition);
     }
 
     @Override

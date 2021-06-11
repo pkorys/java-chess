@@ -6,8 +6,8 @@ public class Pawn extends Piece {
     final int moveDirection;
     Field destinationField;
 
-    public Pawn(String color){
-        super("pawn", color);
+    public Pawn(String color, Field myPosition){
+        super("pawn", color, myPosition);
 
         if (getPieceColor() == "White")
             moveDirection = -1;
@@ -77,16 +77,16 @@ public class Pawn extends Piece {
     private void changePieceAfterPromotion(char firstLetterOfPiece){
         switch (firstLetterOfPiece){
             case 'k':
-                destinationField.setPieceAtField(new Knight(getPieceColor()));
+                destinationField.setPieceAtField(new Knight(getPieceColor(), destinationField));
                 break;
             case 'b':
-                destinationField.setPieceAtField(new Bishop(getPieceColor()));
+                destinationField.setPieceAtField(new Bishop(getPieceColor(), destinationField));
                 break;
             case 'r':
-                destinationField.setPieceAtField(new Rook(getPieceColor()));
+                destinationField.setPieceAtField(new Rook(getPieceColor(), destinationField));
                 break;
             case 'q':
-                destinationField.setPieceAtField(new Queen(getPieceColor()));
+                destinationField.setPieceAtField(new Queen(getPieceColor(), destinationField));
                 break;
         }
     }
@@ -118,4 +118,22 @@ public class Pawn extends Piece {
         return super.isWayClear();
     }
 
+    @Override
+    protected void checkFields() {
+        int myVerticalPosition = myPosition.getVerticalPosition();
+        int myHorizontalPosition = myPosition.getHorizontalPosition();
+
+        checkIfFieldExists(myHorizontalPosition -1, myVerticalPosition-moveDirection);
+        checkIfFieldExists(myHorizontalPosition +1, myVerticalPosition-moveDirection);
+
+    }
+
+    @Override
+    protected void uncheckFields() {
+        int myVerticalPosition = myPosition.getVerticalPosition();
+        int myHorizontalPosition = myPosition.getHorizontalPosition();
+
+        uncheckIfFieldExists(myHorizontalPosition -1, myVerticalPosition-moveDirection);
+        uncheckIfFieldExists(myHorizontalPosition +1, myVerticalPosition-moveDirection);
+    }
 }
