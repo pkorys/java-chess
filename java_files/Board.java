@@ -126,10 +126,17 @@ public class Board {
             return true;
     }
 
-    public void makeFirstChecking(){
+    public void makeChecking(){
         for (int i =0; i < fields.length; i++){
             if(fields[i].getPieceAtField()!= null)
                 fields[i].getPieceAtField().checkFields();
+        }
+    }
+
+    public void makeUnchecking(){
+        for (int i =0; i < fields.length; i++){
+            if(fields[i].getPieceAtField()!= null)
+                fields[i].getPieceAtField().uncheckFields();
         }
     }
 

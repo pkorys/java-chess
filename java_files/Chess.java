@@ -11,8 +11,12 @@ public class Chess {
     public static void main(String[] args) {
         startGame();
         while (true) {
+            chessboard.makeUnchecking();
+            chessboard.makeChecking();
+            chessboard.findField(5,5).printPiecesCheckingMe();
             fieldsToTravel.clear();
             chooseFigure();
+            chessboard.findField(5,5).printPiecesCheckingMe();
             changeTurn();
             chessboard.printBoard();
         }
@@ -24,7 +28,7 @@ public class Chess {
         chessboard.printBoard();
         Piece.setChessboard(chessboard);
         turn = "White";
-        chessboard.makeFirstChecking();
+        chessboard.makeChecking();
     }
 
 
@@ -32,7 +36,7 @@ public class Chess {
         String move;
         System.out.println("-=-=-=-" + turn + " turn-=-=-=-");
         do{
-            System.out.print("Choose figure to move: ");
+            System.out.print("Choose piece to move: ");
             move = input.next();
         }while(!chessboard.isMyFigure(move, turn));
         fieldsToTravel.add(chessboard.getField(move));
@@ -62,10 +66,9 @@ public class Chess {
 
     }
     private static void swapPieces(){
-        fieldsToTravel.get(0).getPieceAtField().uncheckFields();
         fieldsToTravel.get(fieldsToTravel.size()-1).setPieceAtField(fieldsToTravel.get(0).getPieceAtField());
+        fieldsToTravel.get(fieldsToTravel.size()-1).getPieceAtField().setMyPosition(fieldsToTravel.get(fieldsToTravel.size()-1));
         fieldsToTravel.get(0).setPieceAtField(null);
-        fieldsToTravel.get(fieldsToTravel.size()-1).getPieceAtField().checkFields();
     }
 
     private static void quitMove(){
