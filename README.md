@@ -16,7 +16,6 @@ Primitive chess written by me.
 
 
 ### To do:
-- Ignoring the case of the first letter
 - Check and checkmate
 - Castling
 - En passant
