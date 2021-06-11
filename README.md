@@ -6,7 +6,7 @@ Primitive chess written by me.
 - JDK 16.0.1
 
 ## Guide
-**1.** Game runs automaticlly after running Chess.java class. <br>
+**1.** Run application by double click on _Chess.bat_ <br>
 **2.** Choose piece to move by typing its field (for example: _a2_ to choose white pawn
 &nbsp;&nbsp;&nbsp; on field _a2_ ).
 &nbsp;&nbsp;&nbsp;**2.1** If you decide to change piece just type **q**. <br>
