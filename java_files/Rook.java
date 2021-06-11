@@ -3,8 +3,6 @@ import java.util.ArrayList;
 public class Rook extends Piece {
     boolean haveRookMovedBefore = false;
 
-    ArrayList<Field> fieldsToMove;
-
     public Rook(String color, Field myPosition){
         super("rook", color, myPosition);
     }
@@ -27,5 +25,74 @@ public class Rook extends Piece {
         if(moveInHorizontal() != 0 && moveInVertical() != 0)
             return false;
         else return true;
+    }
+
+    @Override
+    protected void checkFields() {
+        int[] ones = new int[]{-1,1};
+        for (int i = 0; i < ones.length; i++){
+            checkVertical(ones[i]);
+        }
+        for (int i = 0; i < ones.length; i++){
+            checkHorizontal(ones[i]);
+        }
+    }
+
+    @Override
+    protected void uncheckFields() {
+        int[] ones = new int[]{-1,1};
+        for (int i = 0; i < ones.length; i++){
+            uncheckVertical(ones[i]);
+            uncheckHorizontal(ones[i]);
+        }
+    }
+
+    private void checkVertical(int i){
+        Field nextField = new Field(myPosition.getHorizontalPosition(), myPosition.getVerticalPosition());
+        do{
+            nextField = chessboard.findField(nextField.getHorizontalPosition(),nextField.getVerticalPosition()+i);
+            if(nextField == null)
+                break;
+            checkIfFieldExists(nextField.getHorizontalPosition(),nextField.getVerticalPosition());
+        }while (canGoOnThisField(nextField));
+    }
+
+    private void checkHorizontal(int i){
+        Field nextField = new Field(myPosition.getHorizontalPosition(), myPosition.getVerticalPosition());
+        do{
+            nextField = chessboard.findField(nextField.getHorizontalPosition()+i,nextField.getVerticalPosition());
+            if(nextField == null)
+                break;
+            checkIfFieldExists(nextField.getHorizontalPosition(),nextField.getVerticalPosition());
+        }while (canGoOnThisField(nextField));
+    }
+
+    private void uncheckHorizontal(int i){
+        Field nextField = new Field(myPosition.getHorizontalPosition(), myPosition.getVerticalPosition());
+        do {
+            nextField = chessboard.findField(nextField.getHorizontalPosition()+i, nextField.getVerticalPosition());
+            if(nextField == null)
+                break;
+        }while (uncheckIfFieldExists(nextField.getHorizontalPosition(),nextField.getVerticalPosition()));
+    }
+
+    private void uncheckVertical(int i){
+        Field nextField = new Field(myPosition.getHorizontalPosition(), myPosition.getVerticalPosition());
+        do {
+            nextField = chessboard.findField(nextField.getHorizontalPosition(), nextField.getVerticalPosition()+i);
+            if(nextField == null)
+                break;
+        }while (uncheckIfFieldExists(nextField.getHorizontalPosition(),nextField.getVerticalPosition()));
+    }
+
+    private boolean canGoOnThisField(Field nextField){
+        if(nextField == null)
+            return false;
+        if(chessboard.findField(nextField.getHorizontalPosition(),nextField.getVerticalPosition()) == null)
+            return false;
+        else if(nextField.getPieceAtField() == null)
+            return true;
+        else
+            return false;
     }
 }

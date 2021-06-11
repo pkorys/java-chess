@@ -13,12 +13,12 @@ public class Chess {
         while (true) {
             chessboard.makeUnchecking();
             chessboard.makeChecking();
-            chessboard.findField(5,5).printPiecesCheckingMe();
+            chessboard.findField(5,3).printPiecesCheckingMe();
             fieldsToTravel.clear();
             chooseFigure();
-            chessboard.findField(5,5).printPiecesCheckingMe();
             changeTurn();
             chessboard.printBoard();
+
         }
 
     }

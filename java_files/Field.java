@@ -4,7 +4,7 @@ public class Field {
     private Piece pieceAtField;
     final private int horizontalPosition;
     final private int verticalPosition;
-    public ArrayList<Piece> piecesCheckingMe;
+    private ArrayList<Piece> piecesCheckingMe;
 
     public Field(int horizontalPosition, int verticalPosition) {
         this.horizontalPosition = horizontalPosition;
