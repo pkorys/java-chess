@@ -42,7 +42,7 @@ public class Board {
     }
 
     public void printBoard(){
-        System.out.println("   a b c d e f g h");
+        System.out.print("   a b c d e f g h");
         for(int i = 0; i < 64; i++){
             if(i%8==0){
                 System.out.println();
@@ -55,7 +55,7 @@ public class Board {
         System.out.println();
     }
     public Field getField(String pos){
-        int x;
+        int x = getXFromChar(pos.charAt(0));
         int y;
 
         if(pos.length() > 1)
@@ -66,38 +66,32 @@ public class Board {
         if(y < 1 || y > 8)
             y = -1;
 
-        switch (pos.charAt(0)){
-            case 'a':
-                x = 1;
-                break;
-            case 'b':
-                x = 2;
-                break;
-            case 'c':
-                x = 3;
-                break;
-            case 'd':
-                x = 4;
-                break;
-            case 'e':
-                x = 5;
-                break;
-            case 'f':
-                x = 6;
-                break;
-            case 'g':
-                x = 7;
-                break;
-            case 'h':
-                x = 8;
-                break;
-            default:
-                x = -1;
-                break;
-        }
-
         return findField(x, y);
     }
+
+    private int getXFromChar(char toGetX){
+        switch (toGetX){
+            case 'a':
+                return  1;
+            case 'b':
+                return  2;
+            case 'c':
+                return 3;
+            case 'd':
+                return  4;
+            case 'e':
+                return  5;
+            case 'f':
+                return  6;
+            case 'g':
+                return  7;
+            case 'h':
+                return 8;
+            default:
+                return -1;
+        }
+    }
+
     public Field findField(int x, int y){
         if(x == -1 || y == -1)
             return null;
@@ -105,12 +99,12 @@ public class Board {
             return fields[8*(8-y)+x-1];
     }
 
-    public boolean isMyPiece(String move, String color){
+    public boolean isMyFigure(String move, String color){
         if(getField(move) == null || getField(move).getPieceAtField() == null){
             return false;
         }
 
-        else if(getField(move).getPieceAtField().getColor() != color){
+        else if(getField(move).getPieceAtField().getPieceColor() != color){
             return false;
         }
 
@@ -119,12 +113,11 @@ public class Board {
     }
 
     public boolean canIMoveTo(String move, String color){
-        if(getField(move) == null){ //Field out of board
+        if(getField(move) == null){
             return false;
         }
 
-
-        else if(getField(move).getPieceAtField() != null && getField(move).getPieceAtField().getColor() == color)
+        else if(getField(move).getPieceAtField() != null && getField(move).getPieceAtField().getPieceColor() == color)
             return false;
 
         else
@@ -132,10 +125,10 @@ public class Board {
     }
 
     public void addFields(ArrayList<Field> fieldsToTravel) {
-        int startX = fieldsToTravel.get(0).getPos()[0];
-        int destinyX = fieldsToTravel.get(fieldsToTravel.size()-1).getPos()[0];
-        int startY = fieldsToTravel.get(0).getPos()[1];
-        int destinyY = fieldsToTravel.get(fieldsToTravel.size()-1).getPos()[1];
+        int startX = fieldsToTravel.get(0).getHorizontalPosition();
+        int destinyX = fieldsToTravel.get(fieldsToTravel.size()-1).getHorizontalPosition();
+        int startY = fieldsToTravel.get(0).getVerticalPosition();
+        int destinyY = fieldsToTravel.get(fieldsToTravel.size()-1).getVerticalPosition();
         int it = 1;
 
         if(startX > destinyX){

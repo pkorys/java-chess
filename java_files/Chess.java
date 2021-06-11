@@ -1,5 +1,3 @@
-import jdk.swing.interop.SwingInterOpUtils;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -14,7 +12,7 @@ public class Chess {
         startGame();
         while (true) {
             fieldsToTravel.clear();
-            choosePiece();
+            chooseFigure();
             changeTurn();
             playArena.printBoard();
         }
@@ -28,13 +26,13 @@ public class Chess {
     }
 
 
-    public static void choosePiece(){
+    public static void chooseFigure(){
         String move;
         System.out.println("-=-=-=-" + turn + " turn-=-=-=-");
         do{
-            System.out.print("Choose piece to move: ");
+            System.out.print("Choose figure to move: ");
             move = input.next();
-        }while(!playArena.isMyPiece(move, turn));
+        }while(!playArena.isMyFigure(move, turn));
         fieldsToTravel.add(playArena.getField(move));
         makeMove();
     }
@@ -64,7 +62,7 @@ public class Chess {
         }
         else {
             fieldsToTravel.clear();
-            choosePiece();
+            chooseFigure();
         }
     }
 

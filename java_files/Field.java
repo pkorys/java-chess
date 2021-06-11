@@ -1,11 +1,11 @@
 public class Field {
     private Piece pieceAtField;
-    final private int xPos;
-    final private int yPos;
+    final private int horizontalPosition;
+    final private int verticalPosition;
 
-    public Field(int xPos, int yPos) {
-        this.xPos = xPos;
-        this.yPos = yPos;
+    public Field(int horizontalPosition, int verticalPosition) {
+        this.horizontalPosition = horizontalPosition;
+        this.verticalPosition = verticalPosition;
         pieceAtField = null;
     }
 
@@ -17,15 +17,19 @@ public class Field {
         this.pieceAtField = pieceAtField;
     }
 
-    public void printPiece(){ //Print colored piece symbol or space if field is empty
+    public void printPiece(){
         if(pieceAtField == null)
             System.out.print(" ");
         else
-            System.out.print(pieceAtField.getSymbol());
+            System.out.print(pieceAtField.getPieceSymbol());
     }
 
-    public int[] getPos(){
-        return new int[]{xPos, yPos};
+    public int getHorizontalPosition(){
+        return horizontalPosition;
+    }
+
+    public int getVerticalPosition(){
+        return verticalPosition;
     }
 
 }

@@ -1,25 +1,31 @@
 import java.util.ArrayList;
 
-public class Rook extends Piece{
-    boolean haveMoved = false; //Did rook moved before?
+public class Rook extends Piece {
+    boolean haveRookMovedBefore = false;
+
+    ArrayList<Field> fieldsToMove;
 
     public Rook(String color){
         super("rook", color);
     }
 
-    public boolean canMove(ArrayList<Field> fields) {
-        int[] vector = new int[]{fields.get(0).getPos()[0] - fields.get(fields.size()-1).getPos()[0], fields.get(0).getPos()[1] - fields.get(fields.size()-1).getPos()[1]};
+    @Override
+    protected boolean isMoveCorrect(){
+        if(isRookMovingInAStraightLine())
+            return isWayClear();
+        else return false;
+    }
 
-        if(vector[0] + vector[1] != vector[0] && vector[0] + vector[1] != vector[1])//If piece try to move diagonally
+    @Override
+    protected boolean isWayClear() {
+        if(super.isWayClear() && !haveRookMovedBefore)
+            haveRookMovedBefore = true;
+        return super.isWayClear();
+    }
+
+    private boolean isRookMovingInAStraightLine(){
+        if(moveInHorizontal() != 0 && moveInVertical() != 0)
             return false;
-
-        else{
-            for(int i = 1; i < fields.size()-1; i++){ //Is way clear
-                if(fields.get(i).getPieceAtField() != null)
-                    return false;
-            }
-            haveMoved = true;
-            return true;
-            }
+        else return true;
     }
 }
