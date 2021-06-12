@@ -68,20 +68,9 @@ public class Piece {
 
     }
 
-    protected void uncheckFields(){
-    }
-
     protected boolean checkIfFieldExists(int horizontal, int vertical){
         if(chessboard.findField(horizontal, vertical) != null) {
             chessboard.findField(horizontal, vertical).setPieceCheckingMe(this);
-            return true;
-        }
-        return false;
-    }
-
-    protected boolean uncheckIfFieldExists(int horizontal, int vertical){
-        if(chessboard.findField(horizontal, vertical) != null) {
-            chessboard.findField(horizontal, vertical).removePieceCheckigMe(this);
             return true;
         }
         return false;

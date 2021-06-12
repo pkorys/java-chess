@@ -32,18 +32,7 @@ public class Rook extends Piece {
         int[] ones = new int[]{-1,1};
         for (int i = 0; i < ones.length; i++){
             checkVertical(ones[i]);
-        }
-        for (int i = 0; i < ones.length; i++){
             checkHorizontal(ones[i]);
-        }
-    }
-
-    @Override
-    protected void uncheckFields() {
-        int[] ones = new int[]{-1,1};
-        for (int i = 0; i < ones.length; i++){
-            uncheckVertical(ones[i]);
-            uncheckHorizontal(ones[i]);
         }
     }
 
@@ -65,24 +54,6 @@ public class Rook extends Piece {
                 break;
             checkIfFieldExists(nextField.getHorizontalPosition(),nextField.getVerticalPosition());
         }while (canGoOnThisField(nextField));
-    }
-
-    private void uncheckHorizontal(int i){
-        Field nextField = new Field(myPosition.getHorizontalPosition(), myPosition.getVerticalPosition());
-        do {
-            nextField = chessboard.findField(nextField.getHorizontalPosition()+i, nextField.getVerticalPosition());
-            if(nextField == null)
-                break;
-        }while (uncheckIfFieldExists(nextField.getHorizontalPosition(),nextField.getVerticalPosition()));
-    }
-
-    private void uncheckVertical(int i){
-        Field nextField = new Field(myPosition.getHorizontalPosition(), myPosition.getVerticalPosition());
-        do {
-            nextField = chessboard.findField(nextField.getHorizontalPosition(), nextField.getVerticalPosition()+i);
-            if(nextField == null)
-                break;
-        }while (uncheckIfFieldExists(nextField.getHorizontalPosition(),nextField.getVerticalPosition()));
     }
 
     private boolean canGoOnThisField(Field nextField){

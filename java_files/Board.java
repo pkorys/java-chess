@@ -135,8 +135,7 @@ public class Board {
 
     public void makeUnchecking(){
         for (int i =0; i < fields.length; i++){
-            if(fields[i].getPieceAtField()!= null)
-                fields[i].getPieceAtField().uncheckFields();
+           fields[i].removePiecesCheckigMe();
         }
     }
 

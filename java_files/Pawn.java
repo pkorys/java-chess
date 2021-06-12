@@ -127,13 +127,4 @@ public class Pawn extends Piece {
         checkIfFieldExists(myHorizontalPosition +1, myVerticalPosition-moveDirection);
 
     }
-
-    @Override
-    protected void uncheckFields() {
-        int myVerticalPosition = myPosition.getVerticalPosition();
-        int myHorizontalPosition = myPosition.getHorizontalPosition();
-
-        uncheckIfFieldExists(myHorizontalPosition -1, myVerticalPosition-moveDirection);
-        uncheckIfFieldExists(myHorizontalPosition +1, myVerticalPosition-moveDirection);
-    }
 }

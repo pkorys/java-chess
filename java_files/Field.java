@@ -42,8 +42,8 @@ public class Field {
         piecesCheckingMe.add(piece);
     }
 
-    public void removePieceCheckigMe(Piece piece){
-                piecesCheckingMe.remove(piece);
+    public void removePiecesCheckigMe(){
+                piecesCheckingMe.clear();
     }
     public void printPiecesCheckingMe(){
         for(int i = 0; i < piecesCheckingMe.size(); i++)

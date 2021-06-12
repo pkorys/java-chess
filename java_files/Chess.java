@@ -1,3 +1,4 @@
+//Written by Piotr Korys, Lublin 2021
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -13,7 +14,7 @@ public class Chess {
         while (true) {
             chessboard.makeUnchecking();
             chessboard.makeChecking();
-            chessboard.findField(5,3).printPiecesCheckingMe();
+            chessboard.findField(2,3).printPiecesCheckingMe();
             fieldsToTravel.clear();
             chooseFigure();
             changeTurn();
