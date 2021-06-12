@@ -18,7 +18,6 @@ public class Chess {
             chooseFigure();
             changeTurn();
             chessboard.printBoard();
-
         }
 
     }

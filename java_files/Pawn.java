@@ -132,8 +132,8 @@ public class Pawn extends Piece {
         int myVerticalPosition = myPosition.getVerticalPosition();
         int myHorizontalPosition = myPosition.getHorizontalPosition();
 
-        checkIfFieldExists(myHorizontalPosition -1, myVerticalPosition-moveDirection);
-        checkIfFieldExists(myHorizontalPosition +1, myVerticalPosition-moveDirection);
+        checkIfFieldExists(myHorizontalPosition -1, myVerticalPosition+moveDirection);
+        checkIfFieldExists(myHorizontalPosition +1, myVerticalPosition+moveDirection);
 
     }
 }
