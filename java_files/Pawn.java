@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Pawn extends Piece {
@@ -10,9 +11,9 @@ public class Pawn extends Piece {
         super("pawn", color, myPosition);
 
         if (getPieceColor() == "White")
-            moveDirection = -1;
-        else
             moveDirection = 1;
+        else
+            moveDirection = -1;
     }
 
     @Override
@@ -25,13 +26,15 @@ public class Pawn extends Piece {
     protected boolean isMoveCorrect() {
         if(canPawnMoveCorrect())
             return isWayClear();
+        else if(canCapture())
+            return true;
         else return false;
     }
 
     private boolean canPawnMoveCorrect(){
         if(canMakeMoveForward())
             return canMakeMoveForward();
-        else return canCapture();
+        else return false;
     }
 
     private boolean canMakeMoveForward(){
@@ -57,8 +60,11 @@ public class Pawn extends Piece {
     private boolean canCapture(){
         if(destinationField.getPieceAtField() == null)
             return false;
-        if(moveInVertical() == moveDirection && Math.abs(moveInHorizontal()) == 1)
+        if(moveInVertical() == moveDirection && Math.abs(moveInHorizontal()) == 1) {
+            if(canPromote())
+                pawnPromotion();
             return true;
+        }
         else return false;
     }
 
@@ -68,7 +74,7 @@ public class Pawn extends Piece {
             System.out.println("PROMOTION!");
             do{
                 System.out.print("Choose new piece: ");
-                inputedPiece = input.next();
+                inputedPiece = input.next().toLowerCase();
             }while (!isPiece(inputedPiece.charAt(0)));
 
             changePieceAfterPromotion(inputedPiece.charAt(0));
@@ -77,16 +83,16 @@ public class Pawn extends Piece {
     private void changePieceAfterPromotion(char firstLetterOfPiece){
         switch (firstLetterOfPiece){
             case 'k':
-                destinationField.setPieceAtField(new Knight(getPieceColor(), destinationField));
+                myPosition.setPieceAtField(new Knight(getPieceColor(), myPosition));
                 break;
             case 'b':
-                destinationField.setPieceAtField(new Bishop(getPieceColor(), destinationField));
+                myPosition.setPieceAtField(new Bishop(getPieceColor(), myPosition));
                 break;
             case 'r':
-                destinationField.setPieceAtField(new Rook(getPieceColor(), destinationField));
+                myPosition.setPieceAtField(new Rook(getPieceColor(), myPosition));
                 break;
             case 'q':
-                destinationField.setPieceAtField(new Queen(getPieceColor(), destinationField));
+                myPosition.setPieceAtField(new Queen(getPieceColor(), myPosition));
                 break;
         }
     }
@@ -110,12 +116,15 @@ public class Pawn extends Piece {
 
     @Override
     protected boolean isWayClear() {
-        if(super.isWayClear() && !havePawnMovedBefore)
+        for(int i = 1; i < fieldsToMove.size(); i++){
+            if(fieldsToMove.get(i).getPieceAtField() != null)
+                return false;
+        }
+        if(!havePawnMovedBefore)
             havePawnMovedBefore = true;
-        else if(canPromote())
+        if(canPromote())
             pawnPromotion();
-
-        return super.isWayClear();
+        return true;
     }
 
     @Override

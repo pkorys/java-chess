@@ -49,11 +49,11 @@ public class Piece {
     }
 
     protected int moveInHorizontal(){
-        return fieldsToMove.get(0).getHorizontalPosition() - fieldsToMove.get(fieldsToMove.size()-1).getHorizontalPosition();
+        return fieldsToMove.get(fieldsToMove.size()-1).getHorizontalPosition() - fieldsToMove.get(0).getHorizontalPosition();
     }
 
     protected int moveInVertical(){
-        return fieldsToMove.get(0).getVerticalPosition() - fieldsToMove.get(fieldsToMove.size()-1).getVerticalPosition();
+        return fieldsToMove.get(fieldsToMove.size()-1).getVerticalPosition() - fieldsToMove.get(0).getVerticalPosition();
     }
 
     protected boolean isWayClear(){

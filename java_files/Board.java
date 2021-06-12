@@ -140,53 +140,34 @@ public class Board {
     }
 
     public void addFields(ArrayList<Field> fieldsToTravel) {
-        int startX = fieldsToTravel.get(0).getHorizontalPosition();
-        int destinyX = fieldsToTravel.get(fieldsToTravel.size()-1).getHorizontalPosition();
-        int startY = fieldsToTravel.get(0).getVerticalPosition();
-        int destinyY = fieldsToTravel.get(fieldsToTravel.size()-1).getVerticalPosition();
-        int it = 1;
+        Field firstField = fieldsToTravel.get(0);
+        Field lastField = fieldsToTravel.get(fieldsToTravel.size()-1);
+        fieldsToTravel.remove(lastField);
+        int moveInVertical = lastField.getVerticalPosition() - fieldsToTravel.get(0).getVerticalPosition();
+        int moveInHorizontal = lastField.getHorizontalPosition() - fieldsToTravel.get(0).getHorizontalPosition();
 
-        if(startX > destinyX){
-            for(int i = startX - it; i > destinyX; i--){
-                if(startY < destinyY){
-                    for(int j = startY+it; j < destinyY; j++)
-                        fieldsToTravel.add(fieldsToTravel.size()-1, findField(i,j));
-                }
-                else{
-                    for(int j = destinyY+it; j < startY; j++)
-                        fieldsToTravel.add(fieldsToTravel.size()-1, findField(i,j));
-                }
-                it++;
-            }
+        if(moveInHorizontal == 0){
+            if(Math.abs(moveInVertical) == moveInVertical)
+                for(int i=1; i <= moveInVertical; i++)
+                    fieldsToTravel.add(findField(firstField.getHorizontalPosition(), firstField.getVerticalPosition()+i));
+                else
+                    for(int i=1; i <=Math.abs(moveInVertical); i++)
+                        fieldsToTravel.add(findField(firstField.getHorizontalPosition(), firstField.getVerticalPosition()-i));
         }
-        else if(startX == destinyX){
-            if(startY < destinyY){
-                for(int j = startY; j < destinyY; j++)
-                    fieldsToTravel.add(fieldsToTravel.size()-1, findField(startX,j));
-            }
-            else{
-                for(int j = startY; j > destinyY; j--)
-                    fieldsToTravel.add(fieldsToTravel.size()-1, findField(startX,j));
-            }
+        else if(moveInVertical == 0){
+            if(Math.abs(moveInHorizontal) == moveInHorizontal)
+                for(int i=1; i <= moveInHorizontal; i++)
+                    fieldsToTravel.add(findField(firstField.getHorizontalPosition()+i, firstField.getVerticalPosition()));
+            else
+                for(int i=1; i <=Math.abs(moveInHorizontal); i++)
+                    fieldsToTravel.add(findField(firstField.getHorizontalPosition()-i, firstField.getVerticalPosition()));
         }
-        else{
-            for(int i = startX+it; i < destinyX; i++){
-                if(startY > destinyY){
-                    for(int j = destinyY+it; j < startY; j++)
-                        fieldsToTravel.add(fieldsToTravel.size()-1, findField(i,j));
-                }
-                else{
-
-                    for(int j = startY+it; j < destinyY; j++)
-                        fieldsToTravel.add(fieldsToTravel.size()-1, findField(i,j));
-                }
-                it++;
-            }
+        else if(Math.abs(moveInHorizontal) == Math.abs(moveInVertical)){
+            int verticalDir = moveInVertical / Math.abs(moveInVertical);
+            int horizontalDir = moveInHorizontal / Math.abs(moveInHorizontal);
+            for (int i = 1; i <= Math.abs(moveInHorizontal); i++)
+                fieldsToTravel.add(findField(firstField.getHorizontalPosition()+(horizontalDir*i), firstField.getVerticalPosition()+(verticalDir*i)));
         }
-
-        for(int i = 1; i < fieldsToTravel.size(); i++){
-            if(fieldsToTravel.get(i) == fieldsToTravel.get(0))
-                fieldsToTravel.remove(i);
-        }
+        else fieldsToTravel.add(lastField);
     }
 }

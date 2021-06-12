@@ -14,7 +14,6 @@ public class Chess {
         while (true) {
             chessboard.makeUnchecking();
             chessboard.makeChecking();
-            chessboard.findField(2,3).printPiecesCheckingMe();
             fieldsToTravel.clear();
             chooseFigure();
             changeTurn();
