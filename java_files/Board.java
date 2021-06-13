@@ -1,7 +1,14 @@
 import java.util.ArrayList;
 
 public class Board {
+    String name;
     public Field[] fields = new Field[64];
+    public Board(){
+    }
+    public Board(Board otherBoard){
+        for(int i =0; i <fields.length; i++)
+            this.fields[i] = new Field(otherBoard.fields[i]);
+    }
 
     public void setFields(){
         for(int i = 0; i < fields.length; i++){
@@ -127,9 +134,13 @@ public class Board {
     }
 
     public void makeChecking(){
+        ArrayList<Field> kings = new ArrayList<>();
         for (int i =0; i < fields.length; i++){
-            if(fields[i].getPieceAtField()!= null)
+            if(fields[i].getPieceAtField()!= null){
                 fields[i].getPieceAtField().checkFields();
+                if(fields[i].getPieceAtField().getPieceType() == "King")
+                    kings.add(fields[i]);
+            }
         }
     }
 
@@ -169,5 +180,48 @@ public class Board {
                 fieldsToTravel.add(findField(firstField.getHorizontalPosition()+(horizontalDir*i), firstField.getVerticalPosition()+(verticalDir*i)));
         }
         else fieldsToTravel.add(lastField);
+    }
+
+    private boolean isKingChecked(Field field){
+            if(field.isEnemyChecking(field.getPieceAtField().getPieceColor()))
+                return true;
+            else
+                return false;
+    }
+
+    public boolean isCheck(){
+        for(int i =0; i < fields.length; i++){
+            if(fields[i].getPieceAtField() != null){
+                if(fields[i].getPieceAtField().getPieceType().equals("King"))
+                    if(isKingChecked(fields[i]))
+                        return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isMyKingChecked(String color){
+        for(int i = 0; i < fields.length; i++){
+            if(fields[i].getPieceAtField() != null){
+                if(fields[i].getPieceAtField().getPieceType().equals("King") && fields[i].getPieceAtField().getPieceColor().equals(color)){
+                    if(isKingChecked(fields[i]))
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void swapPieces(ArrayList<Field> fieldsToTravel){
+        fieldsToTravel.get(fieldsToTravel.size()-1).setPieceAtField(fieldsToTravel.get(0).getPieceAtField());
+        fieldsToTravel.get(fieldsToTravel.size()-1).getPieceAtField().setMyPosition(fieldsToTravel.get(fieldsToTravel.size()-1));
+        fieldsToTravel.get(0).setPieceAtField(null);
+    }
+
+    public void fixPositions(){
+        for(int i = 0; i < fields.length; i++){
+            if(fields[i].getPieceAtField() != null)
+                fields[i].getPieceAtField().setMyPosition(fields[i]);
+        }
     }
 }

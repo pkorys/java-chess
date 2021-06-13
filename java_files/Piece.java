@@ -30,6 +30,10 @@ public class Piece {
         return pieceColor;
     }
 
+    public String getPieceType() {
+        return pieceType;
+    }
+
     public String getPieceSymbol() {
         return pieceSymbol;
     }

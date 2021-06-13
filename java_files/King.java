@@ -9,6 +9,9 @@ public class King extends Piece {
 
     @Override
     protected boolean isMoveCorrect() {
+        Field destinationField = fieldsToMove.get(fieldsToMove.size()-1);
+        if(destinationField.isEnemyChecking(getPieceColor()))
+            return false;
         return (Math.abs(moveInVertical()) <= 1 && Math.abs(moveInHorizontal()) <= 1);
     }
 

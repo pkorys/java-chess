@@ -13,6 +13,13 @@ public class Field {
         piecesCheckingMe = new ArrayList<Piece>();
     }
 
+    public Field(Field anotherField){
+        this.horizontalPosition = anotherField.getHorizontalPosition();
+        this.verticalPosition = anotherField.getVerticalPosition();
+        this.pieceAtField = anotherField.getPieceAtField();
+        this.piecesCheckingMe = anotherField.piecesCheckingMe;
+    }
+
     public Piece getPieceAtField() {
         return pieceAtField;
     }
@@ -44,6 +51,13 @@ public class Field {
 
     public void removePiecesCheckigMe(){
                 piecesCheckingMe.clear();
+    }
+    public boolean isEnemyChecking(String myColor){
+        for(int i =0; i < piecesCheckingMe.size(); i++){
+            if(piecesCheckingMe.get(i).getPieceColor() != myColor)
+                return true;
+        }
+        return false;
     }
     public void printPiecesCheckingMe(){
         for(int i = 0; i < piecesCheckingMe.size(); i++)

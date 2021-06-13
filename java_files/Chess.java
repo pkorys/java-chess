@@ -6,80 +6,97 @@ public class Chess {
     private static Scanner input = new Scanner(System.in);
     private static Board chessboard = new Board();
     private static String turn;
+    private static String piece;
+    private static String move;
 
     private static ArrayList<Field> fieldsToTravel = new ArrayList<Field>();
 
     public static void main(String[] args) {
         startGame();
         while (true) {
-            chessboard.makeUnchecking();
-            chessboard.makeChecking();
-            fieldsToTravel.clear();
-            chooseFigure();
-            changeTurn();
-            chessboard.printBoard();
+            playRound();
         }
 
     }
 
     private static void startGame(){
         chessboard.setFields();
-        chessboard.printBoard();
         Piece.setChessboard(chessboard);
         turn = "White";
-        chessboard.makeChecking();
     }
 
+    private static void playRound(){
+        chessboard.makeUnchecking();
+        chessboard.makeChecking();
+        fieldsToTravel.clear();
+        chessboard.printBoard();
+        if(chessboard.isCheck())
+            System.out.println("~CHECK!~");
+        choosePiece();
+        changeTurn();
+    }
 
-    private static void chooseFigure(){
-        String move;
+    private static void choosePiece(){
         System.out.println("-=-=-=-" + turn + " turn-=-=-=-");
         do{
             System.out.print("Choose piece to move: ");
-            move = input.next();
-        }while(!chessboard.isMyFigure(move, turn));
-        fieldsToTravel.add(chessboard.getField(move));
-        makeMove();
+            piece = input.next();
+        }while(!chessboard.isMyFigure(piece, turn));
+        fieldsToTravel.add(chessboard.getField(piece));
+        chooseFieldToMove();
     }
 
-    private static void makeMove(){
-        String move;
-        do{
+    private static void chooseFieldToMove() {
+        do {
             System.out.print("Choose field to move: ");
-            move = input.next();
-            if(move.charAt(0) == 'q')
+            move = input.next().toLowerCase();
+            if (move.charAt(0) == 'q')
                 break;
-        }while(!chessboard.canIMoveTo(move, turn));
+        } while (!chessboard.canIMoveTo(move, turn));
+        analyzeInput();
+    }
+    private static void analyzeInput(){
         if(move.charAt(0) != 'q'){
             fieldsToTravel.add(chessboard.getField(move));
             chessboard.addFields(fieldsToTravel);
-
             if(fieldsToTravel.get(0).getPieceAtField().canMove(fieldsToTravel)){
-                swapPieces();
+                    Board temp = new Board(chessboard);
+                    fieldsToTravel.clear();
+                    fieldsToTravel.add(temp.getField(piece));
+                    fieldsToTravel.add(temp.getField(move));
+                    temp.addFields(fieldsToTravel);
+                    fieldsToTravel.get(0).getPieceAtField().setChessboard(temp);
+                    temp.swapPieces(fieldsToTravel);
+                    temp.makeUnchecking();
+                    temp.makeChecking();
+                    if(temp.isMyKingChecked(turn)){
+                        fieldsToTravel.get(fieldsToTravel.size()-1).getPieceAtField().setChessboard(chessboard);
+                        chessboard.fixPositions();
+                        quitMove();
+                    }
+                    else {
+                        chessboard = temp;
+                        fieldsToTravel.get(fieldsToTravel.size()-1).getPieceAtField().setChessboard(chessboard);
+                    }
             }
             else
                 tryMakeMoveAgain();
         }
         else
             quitMove();
+    }
 
-    }
-    private static void swapPieces(){
-        fieldsToTravel.get(fieldsToTravel.size()-1).setPieceAtField(fieldsToTravel.get(0).getPieceAtField());
-        fieldsToTravel.get(fieldsToTravel.size()-1).getPieceAtField().setMyPosition(fieldsToTravel.get(fieldsToTravel.size()-1));
-        fieldsToTravel.get(0).setPieceAtField(null);
-    }
 
     private static void quitMove(){
         fieldsToTravel.clear();
-        chooseFigure();
+        choosePiece();
     }
 
     private static void tryMakeMoveAgain(){
         Field temp = fieldsToTravel.get(0);
         fieldsToTravel.clear();
         fieldsToTravel.add(temp);
-        makeMove();
+        chooseFieldToMove();
     }
 
     private static void changeTurn(){
