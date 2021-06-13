@@ -224,4 +224,227 @@ public class Board {
                 fields[i].getPieceAtField().setMyPosition(fields[i]);
         }
     }
+    
+    public boolean isCheckMate(String color){
+        for (int i = 0; i < fields.length; i++){
+            if(fields[i].getPieceAtField() != null){
+                if(fields[i].getPieceAtField().getPieceColor().equals(color)){
+                    Piece pieceOnField = fields[i].getPieceAtField();
+                    switch (pieceOnField.getPieceType()){
+                        case "Pawn":{
+                            if(!isPawnInMate((Pawn) pieceOnField, color))
+                                return false;
+                            break;
+                        }
+                        case "Knight":{
+                            if(!isKnightInMate((Knight) pieceOnField, color))
+                                return false;
+                            break;
+                        }
+                        case "Bishop":{
+                            if(!isBishopInMate((Bishop) pieceOnField, color))
+                                return false;
+                            break;
+                        }
+                        case "Rook":{
+                            if(!isRookInMate((Rook) pieceOnField, color))
+                                return false;
+                            break;
+                        }
+                        case "Queen":{
+                            if(!isQueenInMate((Queen) pieceOnField, color))
+                                return false;
+                            break;
+                        }
+                        case "King":{
+                            if(!isKingInMate((King) pieceOnField, color))
+                                return false;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean isPawnInMate(Pawn pawn, String color){
+        ArrayList<Field> fieldsToTravel = new ArrayList<>();
+        int[][] moves = new int[][]{{0,1}, {0,2}, {-1,1}, {1,1}};
+        for (int i = 0; i < moves.length; i++){
+            Board temp = new Board(this);
+            fieldsToTravel.clear();
+            fieldsToTravel.add(temp.findField(pawn.myPosition.getHorizontalPosition(), pawn.myPosition.getVerticalPosition()));
+            fieldsToTravel.add(temp.findField(pawn.myPosition.getHorizontalPosition()+moves[i][0], pawn.myPosition.getVerticalPosition()+(moves[i][1]*pawn.moveDirection)));
+            if(fieldsToTravel.get(fieldsToTravel.size()-1) != null){
+            temp.addFields(fieldsToTravel);
+            fieldsToTravel.get(0).getPieceAtField().setChessboard(temp);
+                if(fieldsToTravel.get(0).getPieceAtField().canMove(fieldsToTravel)){
+                    temp.swapPieces(fieldsToTravel);
+                    temp.makeUnchecking();
+                    temp.makeChecking();
+                    if(!temp.isMyKingChecked(color))
+                        return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean isKnightInMate(Knight knight, String color){
+        ArrayList<Field> fieldsToTravel = new ArrayList<>();
+        int[] ones = new int[]{-1, 1};
+        int[] twos = new int[]{-2, 2};
+
+        for (int i = 0; i < ones.length; i++){
+            for(int j = 0; j < twos.length; j++) {
+                Board temp = new Board(this);
+                fieldsToTravel.clear();
+                fieldsToTravel.add(temp.findField(knight.myPosition.getHorizontalPosition(), knight.myPosition.getVerticalPosition()));
+                fieldsToTravel.add(temp.findField(knight.myPosition.getHorizontalPosition() + ones[i], knight.myPosition.getVerticalPosition() + twos[j]));
+                if (fieldsToTravel.get(fieldsToTravel.size() - 1) != null) {
+                fieldsToTravel.get(0).getPieceAtField().setChessboard(temp);
+                    if (fieldsToTravel.get(0).getPieceAtField().canMove(fieldsToTravel)) {
+                        temp.swapPieces(fieldsToTravel);
+                        temp.makeUnchecking();
+                        temp.makeChecking();
+                        if (!temp.isMyKingChecked(color))
+                            return false;
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < ones.length; i++){
+            for(int j = 0; j < twos.length; j++) {
+                Board temp = new Board(this);
+                fieldsToTravel.clear();
+                fieldsToTravel.add(temp.findField(knight.myPosition.getHorizontalPosition(), knight.myPosition.getVerticalPosition()));
+                fieldsToTravel.add(temp.findField(knight.myPosition.getHorizontalPosition() + twos[i], knight.myPosition.getVerticalPosition() + ones[j]));
+                fieldsToTravel.get(0).getPieceAtField().setChessboard(temp);
+                if (fieldsToTravel.get(fieldsToTravel.size() - 1) != null) {
+                    if (fieldsToTravel.get(0).getPieceAtField().canMove(fieldsToTravel)) {
+                        temp.swapPieces(fieldsToTravel);
+                        temp.makeUnchecking();
+                        temp.makeChecking();
+                        if (!temp.isMyKingChecked(color))
+                            return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean isBishopInMate(Bishop bishop, String color){
+        ArrayList<Field> fieldsToTravel = new ArrayList<>();
+        for (int i = 0; i < fields.length; i++){
+            Board temp = new Board(this);
+            fieldsToTravel.clear();
+            fieldsToTravel.add(temp.findField(bishop.myPosition.getHorizontalPosition(), bishop.myPosition.getVerticalPosition()));
+            for (int j = 0; j < temp.fields[i].getPiecesCheckingMe().size(); j++){
+                if(temp.fields[i].getPiecesCheckingMe().get(j).equals(bishop)){
+                    fieldsToTravel.add(temp.fields[i]);
+                    temp.addFields(fieldsToTravel);
+                    fieldsToTravel.get(0).getPieceAtField().setChessboard(temp);
+                        if(fieldsToTravel.get(0).getPieceAtField().canMove(fieldsToTravel)){
+                            temp.swapPieces(fieldsToTravel);
+                            temp.makeUnchecking();
+                            temp.makeChecking();
+                            if(!temp.isMyKingChecked(color))
+                                return false;
+                        }
+                    }
+            }
+        }
+        return true;
+    }
+
+    private boolean isRookInMate(Rook rook, String color){
+        ArrayList<Field> fieldsToTravel = new ArrayList<>();
+        for (int i = 0; i < fields.length; i++){
+            Board temp = new Board(this);
+            fieldsToTravel.clear();
+            fieldsToTravel.add(temp.findField(rook.myPosition.getHorizontalPosition(), rook.myPosition.getVerticalPosition()));
+            for (int j = 0; j < temp.fields[i].getPiecesCheckingMe().size(); j++){
+                if(temp.fields[i].getPiecesCheckingMe().get(j).equals(rook)){
+                    fieldsToTravel.add(temp.fields[i]);
+                    temp.addFields(fieldsToTravel);
+                    fieldsToTravel.get(0).getPieceAtField().setChessboard(temp);
+                    if(fieldsToTravel.get(0).getPieceAtField().canMove(fieldsToTravel)){
+                        temp.swapPieces(fieldsToTravel);
+                        temp.makeUnchecking();
+                        temp.makeChecking();
+                        if(!temp.isMyKingChecked(color))
+                            return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean isQueenInMate(Queen queen, String color){
+        ArrayList<Field> fieldsToTravel = new ArrayList<>();
+        for (int i = 0; i < fields.length; i++){
+            Board temp = new Board(this);
+            fieldsToTravel.clear();
+            fieldsToTravel.add(temp.findField(queen.myPosition.getHorizontalPosition(), queen.myPosition.getVerticalPosition()));
+            for (int j = 0; j < temp.fields[i].getPiecesCheckingMe().size(); j++){
+                if(temp.fields[i].getPiecesCheckingMe().get(j).equals(queen)){
+                    fieldsToTravel.add(temp.fields[i]);
+                    temp.addFields(fieldsToTravel);
+                    fieldsToTravel.get(0).getPieceAtField().setChessboard(temp);
+                    if(fieldsToTravel.get(0).getPieceAtField().canMove(fieldsToTravel)){
+                        temp.swapPieces(fieldsToTravel);
+                        temp.makeUnchecking();
+                        temp.makeChecking();
+                        if(!temp.isMyKingChecked(color))
+                            return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean isKingInMate(King king, String color){
+        ArrayList<Field> fieldsToTravel = new ArrayList<>();
+        int[] ones = new int[]{-1,0,1};
+        for (int i = 0; i < ones.length; i++){
+            for (int j = 0; j < ones.length; j++){
+                if(ones[i] == 0 && ones[j] == 0)
+                    continue;
+                Board temp = new Board(this);
+                int myVerticalPosition = king.myPosition.getVerticalPosition();
+                int myHorizontalPosition = king.myPosition.getHorizontalPosition();
+                fieldsToTravel.clear();
+                fieldsToTravel.add(temp.findField(king.myPosition.getHorizontalPosition(), king.myPosition.getVerticalPosition()));
+                fieldsToTravel.add(temp.findField(myHorizontalPosition+ones[i], myVerticalPosition+ones[j]));
+                if(fieldsToTravel.get(fieldsToTravel.size()-1) != null){
+                temp.addFields(fieldsToTravel);
+                fieldsToTravel.get(0).getPieceAtField().setChessboard(temp);
+                if(fieldsToTravel.get(fieldsToTravel.size()-1).getPieceAtField() == null){
+                    if(fieldsToTravel.get(0).getPieceAtField().canMove(fieldsToTravel)){
+                        temp.swapPieces(fieldsToTravel);
+                        temp.makeUnchecking();
+                        temp.makeChecking();
+                        if(!temp.isMyKingChecked(color))
+                            return false;
+                    }
+                }
+                else if(fieldsToTravel.get(fieldsToTravel.size()-1).getPieceAtField().getPieceColor() != color){
+                    if(fieldsToTravel.get(0).getPieceAtField().canMove(fieldsToTravel)){
+                        temp.swapPieces(fieldsToTravel);
+                        temp.makeUnchecking();
+                        temp.makeChecking();
+                        if(!temp.isMyKingChecked(color))
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
 }

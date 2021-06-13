@@ -6,6 +6,10 @@ public class Field {
     final private int verticalPosition;
     private ArrayList<Piece> piecesCheckingMe;
 
+    public ArrayList<Piece> getPiecesCheckingMe() {
+        return piecesCheckingMe;
+    }
+
     public Field(int horizontalPosition, int verticalPosition) {
         this.horizontalPosition = horizontalPosition;
         this.verticalPosition = verticalPosition;

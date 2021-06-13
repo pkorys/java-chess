@@ -13,10 +13,12 @@ public class Chess {
 
     public static void main(String[] args) {
         startGame();
-        while (true) {
+        do{
             playRound();
-        }
-
+        }while(!chessboard.isCheck() || !chessboard.isCheckMate(turn));
+        chessboard.printBoard();
+        changeTurn();
+        System.out.println("Checkmate! " + turn + " wins!");
     }
 
     private static void startGame(){
@@ -31,7 +33,7 @@ public class Chess {
         fieldsToTravel.clear();
         chessboard.printBoard();
         if(chessboard.isCheck())
-            System.out.println("~CHECK!~");
+            System.out.println("CHECK");
         choosePiece();
         changeTurn();
     }
@@ -85,7 +87,6 @@ public class Chess {
         else
             quitMove();
     }
-
 
     private static void quitMove(){
         fieldsToTravel.clear();
