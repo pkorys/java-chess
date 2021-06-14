@@ -1,3 +1,4 @@
+package pl.piotrkorys.chess;
 import java.util.ArrayList;
 
 public class Field {
@@ -6,18 +7,6 @@ public class Field {
     final private int verticalPosition;
     private ArrayList<Piece> piecesCheckingMe;
     private Pawn enPassant;
-
-    public Pawn getEnPassant() {
-        return enPassant;
-    }
-
-    public void setEnPassant(Pawn enPassant) {
-        this.enPassant = enPassant;
-    }
-
-    public ArrayList<Piece> getPiecesCheckingMe() {
-        return piecesCheckingMe;
-    }
 
     public Field(int horizontalPosition, int verticalPosition) {
         this.horizontalPosition = horizontalPosition;
@@ -33,6 +22,21 @@ public class Field {
         this.piecesCheckingMe = anotherField.piecesCheckingMe;
         this.enPassant = anotherField.getEnPassant();
     }
+    public Pawn getEnPassant() {
+        return enPassant;
+    }
+
+    public void setEnPassant(Pawn enPassant) {
+        this.enPassant = enPassant;
+    }
+
+    public ArrayList<Piece> getPiecesCheckingMe() {
+        return piecesCheckingMe;
+    }
+
+    public void setPieceCheckingMe(Piece piece){
+        piecesCheckingMe.add(piece);
+    }
 
     public Piece getPieceAtField() {
         return pieceAtField;
@@ -44,13 +48,6 @@ public class Field {
         this.pieceAtField.setMyPosition(this);
     }
 
-    public void printPiece(){
-        if(pieceAtField == null)
-            System.out.print(" ");
-        else
-            System.out.print(pieceAtField.getPieceSymbol());
-    }
-
     public int getHorizontalPosition(){
         return horizontalPosition;
     }
@@ -59,13 +56,17 @@ public class Field {
         return verticalPosition;
     }
 
-    public void setPieceCheckingMe(Piece piece){
-        piecesCheckingMe.add(piece);
+    public void printPiece(){
+        if(pieceAtField == null)
+            System.out.print(" ");
+        else
+            System.out.print(pieceAtField.getPieceSymbol());
     }
 
-    public void removePiecesCheckigMe(){
+    public void removePiecesCheckingMe(){
                 piecesCheckingMe.clear();
     }
+
     public boolean isEnemyChecking(String myColor){
         for(int i =0; i < piecesCheckingMe.size(); i++){
             if(piecesCheckingMe.get(i).getPieceColor() != myColor)
@@ -73,9 +74,9 @@ public class Field {
         }
         return false;
     }
+
     public void printPiecesCheckingMe(){
         for(int i = 0; i < piecesCheckingMe.size(); i++)
             System.out.println(piecesCheckingMe.get(i).getPieceSymbol());
     }
-
 }

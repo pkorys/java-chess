@@ -17,4 +17,3 @@ Primitive chess written by me.
 ### To do:
 - Stalemate
 - Export notation to .txt file
-- Code optimization

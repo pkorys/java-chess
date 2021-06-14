@@ -1,5 +1,5 @@
+package pl.piotrkorys.chess;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class Pawn extends Piece {
@@ -16,29 +16,17 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove(ArrayList<Field> fieldsToMove) {
-        destinationField = fieldsToMove.get(fieldsToMove.size()-1);
-        return super.canMove(fieldsToMove);
-    }
-
-    @Override
     protected boolean isMoveCorrect() {
-        if(canPawnMoveCorrect())
+        destinationField = fieldsToMove.get(fieldsToMove.size()-1);
+        if(canMakeMoveForward())
             return isWayClear();
         else if(canCapture())
             return true;
-
-        else return false;
-    }
-
-    private boolean canPawnMoveCorrect(){
-        if(canMakeMoveForward())
-            return canMakeMoveForward();
         else return false;
     }
 
     private boolean canMakeMoveForward(){
-        if(moveInHorizontal() == 0)
+        if(getMoveInHorizontal() == 0)
             return (canMakeExtraMove() || canMakeNormalMove());
         else return false;
     }
@@ -46,16 +34,15 @@ public class Pawn extends Piece {
     private boolean canMakeExtraMove(){
         if(isHaveMovedBefore())
             return false;
-        else if(moveInVertical() == 2*moveDirection){
+        else if(getMoveInVertical() == 2*moveDirection){
             chessboard.findField(myPosition.getHorizontalPosition(),myPosition.getVerticalPosition()+moveDirection).setEnPassant(this);
             return true;
         }
-
         else return false;
     }
 
     private boolean canMakeNormalMove(){
-        if(moveInVertical() == moveDirection)
+        if(getMoveInVertical() == moveDirection)
             return true;
         else return false;
     }
@@ -63,12 +50,12 @@ public class Pawn extends Piece {
     private boolean canCapture(){
         if(destinationField.getPieceAtField() == null){
             if(destinationField.getEnPassant() != null){
-                chessboard.findField(myPosition.getHorizontalPosition() + moveInHorizontal(), myPosition.getVerticalPosition()).setPieceAtField(null);
+                chessboard.findField(myPosition.getHorizontalPosition() + getMoveInHorizontal(), myPosition.getVerticalPosition()).setPieceAtField(null);
                 return true;
             }
             return false;
         }
-        if(moveInVertical() == moveDirection && Math.abs(moveInHorizontal()) == 1) {
+        if(getMoveInVertical() == moveDirection && Math.abs(getMoveInHorizontal()) == 1) {
             if(canPromote())
                 pawnPromotion();
             return true;
@@ -88,38 +75,12 @@ public class Pawn extends Piece {
             changePieceAfterPromotion(inputedPiece.charAt(0));
     }
 
-    private void changePieceAfterPromotion(char firstLetterOfPiece){
-        switch (firstLetterOfPiece){
-            case 'k':
-                myPosition.setPieceAtField(new Knight(getPieceColor(), myPosition));
-                break;
-            case 'b':
-                myPosition.setPieceAtField(new Bishop(getPieceColor(), myPosition));
-                break;
-            case 'r':
-                myPosition.setPieceAtField(new Rook(getPieceColor(), myPosition));
-                break;
-            case 'q':
-                myPosition.setPieceAtField(new Queen(getPieceColor(), myPosition));
-                break;
-        }
-    }
-
     private boolean canPromote(){
         if(getPieceColor() == "White" && destinationField.getVerticalPosition() == 8)
             return true;
         else if(getPieceColor() == "Black" && destinationField.getVerticalPosition() == 1)
             return true;
         else return false;
-    }
-
-    private boolean isPiece(char firstLetterOfPiece){
-        switch (firstLetterOfPiece){
-            case 'k': case 'b': case 'r': case 'q':
-                return true;
-            default:
-                return false;
-        }
     }
 
     @Override
@@ -143,5 +104,31 @@ public class Pawn extends Piece {
         checkIfFieldExists(myHorizontalPosition -1, myVerticalPosition+moveDirection);
         checkIfFieldExists(myHorizontalPosition +1, myVerticalPosition+moveDirection);
 
+    }
+
+    private void changePieceAfterPromotion(char firstLetterOfPiece){
+        switch (firstLetterOfPiece){
+            case 'k':
+                myPosition.setPieceAtField(new Knight(getPieceColor(), myPosition));
+                break;
+            case 'b':
+                myPosition.setPieceAtField(new Bishop(getPieceColor(), myPosition));
+                break;
+            case 'r':
+                myPosition.setPieceAtField(new Rook(getPieceColor(), myPosition));
+                break;
+            case 'q':
+                myPosition.setPieceAtField(new Queen(getPieceColor(), myPosition));
+                break;
+        }
+    }
+
+    private boolean isPiece(char firstLetterOfPiece){
+        switch (firstLetterOfPiece){
+            case 'k': case 'b': case 'r': case 'q':
+                return true;
+            default:
+                return false;
+        }
     }
 }

@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+package pl.piotrkorys.chess;
 
 public class Bishop extends Piece {
     public Bishop(String color, Field myPosition){
@@ -13,7 +13,7 @@ public class Bishop extends Piece {
     }
 
     private boolean isBishopMovingDiagonally(){
-        if(Math.abs(moveInHorizontal()) != Math.abs(moveInVertical()))
+        if(Math.abs(getMoveInHorizontal()) != Math.abs(getMoveInVertical()))
             return false;
         else return true;
     }

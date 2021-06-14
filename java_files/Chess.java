@@ -1,6 +1,8 @@
 //Written by Piotr Korys, Lublin 2021
+
 import java.util.ArrayList;
 import java.util.Scanner;
+import pl.piotrkorys.chess.*;
 
 public class Chess {
     private static Scanner input = new Scanner(System.in);
@@ -15,7 +17,7 @@ public class Chess {
         startGame();
         do{
             playRound();
-        }while(!chessboard.isCheck() || !chessboard.isCheckMate(turn));
+        }while(!chessboard.isCheck() || !CheckmateController.isCheckMate(chessboard, turn));
         chessboard.printBoard();
         changeTurn();
         System.out.println("Checkmate! " + turn + " wins!");
@@ -108,5 +110,4 @@ public class Chess {
         else
             turn = "White";
     }
-
 }

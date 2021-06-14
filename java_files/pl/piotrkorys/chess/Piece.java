@@ -1,3 +1,4 @@
+package pl.piotrkorys.chess;
 import java.util.ArrayList;
 
 public class Piece {
@@ -24,16 +25,28 @@ public class Piece {
             pieceSymbol = changeTextColorOnWhite + pieceType.charAt(0);
     }
 
-    public static void setChessboard(Board board){
-        chessboard = board;
-    }
-
     public String getPieceColor() {
         return pieceColor;
     }
 
     public String getPieceType() {
         return pieceType;
+    }
+
+    public String getPieceSymbol() {
+        return pieceSymbol;
+    }
+
+    protected int getMoveInHorizontal(){
+        return fieldsToMove.get(fieldsToMove.size()-1).getHorizontalPosition() - fieldsToMove.get(0).getHorizontalPosition();
+    }
+
+    protected int getMoveInVertical(){
+        return fieldsToMove.get(fieldsToMove.size()-1).getVerticalPosition() - fieldsToMove.get(0).getVerticalPosition();
+    }
+
+    public static void setChessboard(Board board){
+        chessboard = board;
     }
 
     public boolean isHaveMovedBefore() {
@@ -44,15 +57,18 @@ public class Piece {
         this.haveMovedBefore = haveMovedBefore;
     }
 
-    public String getPieceSymbol() {
-        return pieceSymbol;
-    }
-
     public void setMyPosition(Field myPosition) {
         this.myPosition = myPosition;
     }
 
     public boolean canMove(ArrayList<Field> fieldsToMove) {
+        if(fieldsToMove.get(fieldsToMove.size()-1) == null){
+            return false;
+        }
+        else if(fieldsToMove.get(fieldsToMove.size()-1).getPieceAtField() != null){
+            if(fieldsToMove.get(fieldsToMove.size()-1).getPieceAtField().getPieceColor() == getPieceColor())
+                return false;
+        }
         this.fieldsToMove = fieldsToMove;
 
         return isMoveCorrect();
@@ -60,14 +76,6 @@ public class Piece {
 
     protected boolean isMoveCorrect(){
         return isWayClear();
-    }
-
-    protected int moveInHorizontal(){
-        return fieldsToMove.get(fieldsToMove.size()-1).getHorizontalPosition() - fieldsToMove.get(0).getHorizontalPosition();
-    }
-
-    protected int moveInVertical(){
-        return fieldsToMove.get(fieldsToMove.size()-1).getVerticalPosition() - fieldsToMove.get(0).getVerticalPosition();
     }
 
     protected boolean isWayClear(){
@@ -78,10 +86,6 @@ public class Piece {
         return true;
     }
 
-    protected void checkFields(){
-
-    }
-
     protected boolean checkIfFieldExists(int horizontal, int vertical){
         if(chessboard.findField(horizontal, vertical) != null) {
             chessboard.findField(horizontal, vertical).setPieceCheckingMe(this);
@@ -89,4 +93,6 @@ public class Piece {
         }
         return false;
     }
+
+    protected void checkFields(){}
 }

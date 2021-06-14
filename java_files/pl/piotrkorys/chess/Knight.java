@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+package pl.piotrkorys.chess;
 
 public class Knight extends Piece {
     public Knight(String color, Field myPosition){
@@ -13,11 +13,11 @@ public class Knight extends Piece {
     }
 
     private boolean isItProperKnightVerticalMove(){
-        return (Math.abs(moveInVertical()) == 2 && Math.abs(moveInHorizontal()) == 1);
+        return (Math.abs(getMoveInVertical()) == 2 && Math.abs(getMoveInHorizontal()) == 1);
     }
 
     private boolean isItProperKnightHorizontalMove(){
-       return (Math.abs(moveInHorizontal()) == 2 && Math.abs(moveInVertical()) == 1);
+       return (Math.abs(getMoveInHorizontal()) == 2 && Math.abs(getMoveInVertical()) == 1);
     }
 
     @Override
