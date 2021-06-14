@@ -32,6 +32,7 @@ public class Chess {
         chessboard.makeUnchecking();
         chessboard.makeChecking();
         fieldsToTravel.clear();
+        chessboard.removeEnPassant(turn);
         chessboard.printBoard();
         if(chessboard.isCheck())
             System.out.println("CHECK");

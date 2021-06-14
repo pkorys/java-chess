@@ -15,6 +15,6 @@ Primitive chess written by me.
 
 
 ### To do:
-- En passant
+- Stalemate
 - Export notation to .txt file
 - Code optimization

@@ -27,6 +27,7 @@ public class Pawn extends Piece {
             return isWayClear();
         else if(canCapture())
             return true;
+
         else return false;
     }
 
@@ -45,8 +46,11 @@ public class Pawn extends Piece {
     private boolean canMakeExtraMove(){
         if(isHaveMovedBefore())
             return false;
-        else if(moveInVertical() == 2*moveDirection)
+        else if(moveInVertical() == 2*moveDirection){
+            chessboard.findField(myPosition.getHorizontalPosition(),myPosition.getVerticalPosition()+moveDirection).setEnPassant(this);
             return true;
+        }
+
         else return false;
     }
 
@@ -57,8 +61,13 @@ public class Pawn extends Piece {
     }
 
     private boolean canCapture(){
-        if(destinationField.getPieceAtField() == null)
+        if(destinationField.getPieceAtField() == null){
+            if(destinationField.getEnPassant() != null){
+                chessboard.findField(myPosition.getHorizontalPosition() + moveInHorizontal(), myPosition.getVerticalPosition()).setPieceAtField(null);
+                return true;
+            }
             return false;
+        }
         if(moveInVertical() == moveDirection && Math.abs(moveInHorizontal()) == 1) {
             if(canPromote())
                 pawnPromotion();

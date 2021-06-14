@@ -5,6 +5,15 @@ public class Field {
     final private int horizontalPosition;
     final private int verticalPosition;
     private ArrayList<Piece> piecesCheckingMe;
+    private Pawn enPassant;
+
+    public Pawn getEnPassant() {
+        return enPassant;
+    }
+
+    public void setEnPassant(Pawn enPassant) {
+        this.enPassant = enPassant;
+    }
 
     public ArrayList<Piece> getPiecesCheckingMe() {
         return piecesCheckingMe;
@@ -22,6 +31,7 @@ public class Field {
         this.verticalPosition = anotherField.getVerticalPosition();
         this.pieceAtField = anotherField.getPieceAtField();
         this.piecesCheckingMe = anotherField.piecesCheckingMe;
+        this.enPassant = anotherField.getEnPassant();
     }
 
     public Piece getPieceAtField() {

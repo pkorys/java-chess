@@ -447,4 +447,13 @@ public class Board {
         }
         return true;
     }
+
+    public void removeEnPassant(String color){
+        for (int i =0; i <fields.length; i++){
+            if(fields[i].getEnPassant() != null){
+                if(fields[i].getEnPassant().getPieceColor() == color)
+                    fields[i].setEnPassant(null);
+            }
+        }
+    }
 }
