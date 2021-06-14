@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 
 public class Rook extends Piece {
-    boolean haveRookMovedBefore = false;
 
     public Rook(String color, Field myPosition){
         super("rook", color, myPosition);
@@ -16,8 +15,8 @@ public class Rook extends Piece {
 
     @Override
     protected boolean isWayClear() {
-        if(super.isWayClear() && !haveRookMovedBefore)
-            haveRookMovedBefore = true;
+        if(super.isWayClear() && !isHaveMovedBefore())
+            setHaveMovedBefore(true);
         return super.isWayClear();
     }
 

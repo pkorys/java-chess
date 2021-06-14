@@ -15,7 +15,6 @@ Primitive chess written by me.
 
 
 ### To do:
-- Castling
 - En passant
 - Export notation to .txt file
 - Code optimization

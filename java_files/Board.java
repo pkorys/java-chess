@@ -231,27 +231,27 @@ public class Board {
                 if(fields[i].getPieceAtField().getPieceColor().equals(color)){
                     Piece pieceOnField = fields[i].getPieceAtField();
                     switch (pieceOnField.getPieceType()){
-                        case "Pawn":{
+                        case "pawn":{
                             if(!isPawnInMate((Pawn) pieceOnField, color))
                                 return false;
                             break;
                         }
-                        case "Knight":{
+                        case "knight":{
                             if(!isKnightInMate((Knight) pieceOnField, color))
                                 return false;
                             break;
                         }
-                        case "Bishop":{
+                        case "bishop":{
                             if(!isBishopInMate((Bishop) pieceOnField, color))
                                 return false;
                             break;
                         }
-                        case "Rook":{
+                        case "rook":{
                             if(!isRookInMate((Rook) pieceOnField, color))
                                 return false;
                             break;
                         }
-                        case "Queen":{
+                        case "queen":{
                             if(!isQueenInMate((Queen) pieceOnField, color))
                                 return false;
                             break;

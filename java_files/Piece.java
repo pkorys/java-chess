@@ -10,11 +10,13 @@ public class Piece {
     protected static Board chessboard;
     protected Field myPosition;
     ArrayList<Field> fieldsToMove;
+    private boolean haveMovedBefore;
 
     public Piece(String pieceType, String pieceColor, Field myPosition) {
         this.pieceType = pieceType;
         this.pieceColor = pieceColor;
         this.myPosition = myPosition;
+        this.haveMovedBefore = false;
 
         if(pieceColor == "Black")
             pieceSymbol = changeTextColorOnBlack + pieceType.charAt(0) + changeTextColorOnWhite;
@@ -32,6 +34,14 @@ public class Piece {
 
     public String getPieceType() {
         return pieceType;
+    }
+
+    public boolean isHaveMovedBefore() {
+        return haveMovedBefore;
+    }
+
+    public void setHaveMovedBefore(boolean haveMovedBefore) {
+        this.haveMovedBefore = haveMovedBefore;
     }
 
     public String getPieceSymbol() {

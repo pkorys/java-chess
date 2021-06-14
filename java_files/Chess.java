@@ -28,6 +28,7 @@ public class Chess {
     }
 
     private static void playRound(){
+        chessboard.fixPositions();
         chessboard.makeUnchecking();
         chessboard.makeChecking();
         fieldsToTravel.clear();

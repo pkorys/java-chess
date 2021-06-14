@@ -3,7 +3,6 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class Pawn extends Piece {
-    boolean havePawnMovedBefore = false;
     final int moveDirection;
     Field destinationField;
 
@@ -44,7 +43,7 @@ public class Pawn extends Piece {
     }
 
     private boolean canMakeExtraMove(){
-        if(havePawnMovedBefore)
+        if(isHaveMovedBefore())
             return false;
         else if(moveInVertical() == 2*moveDirection)
             return true;
@@ -120,8 +119,8 @@ public class Pawn extends Piece {
             if(fieldsToMove.get(i).getPieceAtField() != null)
                 return false;
         }
-        if(!havePawnMovedBefore)
-            havePawnMovedBefore = true;
+        if(!isHaveMovedBefore())
+            setHaveMovedBefore(true);
         if(canPromote())
             pawnPromotion();
         return true;
