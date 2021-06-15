@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Pawn extends Piece {
     final int moveDirection;
     Field destinationField;
+    boolean isItTest;
 
     public Pawn(String color, Field myPosition){
         super("pawn", color, myPosition);
@@ -13,6 +14,12 @@ public class Pawn extends Piece {
             moveDirection = 1;
         else
             moveDirection = -1;
+    }
+
+    @Override
+    public boolean canMove(ArrayList<Field> fieldsToMove, boolean isItCheckmateTest) {
+        isItTest = isItCheckmateTest;
+        return super.canMove(fieldsToMove, isItCheckmateTest);
     }
 
     @Override
@@ -56,14 +63,12 @@ public class Pawn extends Piece {
             return false;
         }
         if(getMoveInVertical() == moveDirection && Math.abs(getMoveInHorizontal()) == 1) {
-            if(canPromote())
-                pawnPromotion();
             return true;
         }
         else return false;
     }
 
-    private void pawnPromotion(){
+    public void pawnPromotion(){
             Scanner input = new Scanner(System.in);
             String inputedPiece;
             System.out.println("PROMOTION!");
@@ -75,7 +80,7 @@ public class Pawn extends Piece {
             changePieceAfterPromotion(inputedPiece.charAt(0));
     }
 
-    private boolean canPromote(){
+    public boolean canPromote(){
         if(getPieceColor() == "White" && destinationField.getVerticalPosition() == 8)
             return true;
         else if(getPieceColor() == "Black" && destinationField.getVerticalPosition() == 1)
@@ -91,8 +96,6 @@ public class Pawn extends Piece {
         }
         if(!isHaveMovedBefore())
             setHaveMovedBefore(true);
-        if(canPromote())
-            pawnPromotion();
         return true;
     }
 

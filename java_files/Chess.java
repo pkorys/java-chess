@@ -10,7 +10,6 @@ public class Chess {
     private static String turn;
     private static String piece;
     private static String move;
-
     private static ArrayList<Field> fieldsToTravel = new ArrayList<Field>();
 
     public static void main(String[] args) {
@@ -65,7 +64,7 @@ public class Chess {
         if(move.charAt(0) != 'q'){
             fieldsToTravel.add(chessboard.getField(move));
             chessboard.addFields(fieldsToTravel);
-            if(fieldsToTravel.get(0).getPieceAtField().canMove(fieldsToTravel)){
+            if(fieldsToTravel.get(0).getPieceAtField().canMove(fieldsToTravel, false)){
                     Board temp = new Board(chessboard);
                     fieldsToTravel.clear();
                     fieldsToTravel.add(temp.getField(piece));
@@ -83,6 +82,10 @@ public class Chess {
                     else {
                         chessboard = temp;
                         fieldsToTravel.get(fieldsToTravel.size()-1).getPieceAtField().setChessboard(chessboard);
+                        if(fieldsToTravel.get(fieldsToTravel.size()-1).getPieceAtField() instanceof Pawn){
+                            if(((Pawn)fieldsToTravel.get(fieldsToTravel.size()-1).getPieceAtField()).canPromote())
+                                ((Pawn) fieldsToTravel.get(fieldsToTravel.size()-1).getPieceAtField()).pawnPromotion();
+                        }
                     }
             }
             else

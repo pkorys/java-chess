@@ -35,6 +35,5 @@ public class Knight extends Piece {
                 checkIfFieldExists(myPosition.getHorizontalPosition()+twos[i], myPosition.getVerticalPosition()+ones[j]);
             }
         }
-
     }
 }

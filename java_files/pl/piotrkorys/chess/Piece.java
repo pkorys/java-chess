@@ -61,7 +61,7 @@ public class Piece {
         this.myPosition = myPosition;
     }
 
-    public boolean canMove(ArrayList<Field> fieldsToMove) {
+    public boolean canMove(ArrayList<Field> fieldsToMove, boolean isItCheckmateTest) {
         if(fieldsToMove.get(fieldsToMove.size()-1) == null){
             return false;
         }

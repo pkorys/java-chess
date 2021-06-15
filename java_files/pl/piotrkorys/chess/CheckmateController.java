@@ -59,7 +59,7 @@ public class CheckmateController {
             if(fieldsToTravel.get(fieldsToTravel.size()-1) != null){
                 temp.addFields(fieldsToTravel);
                 fieldsToTravel.get(0).getPieceAtField().setChessboard(temp);
-                if(fieldsToTravel.get(0).getPieceAtField().canMove(fieldsToTravel)){
+                if(fieldsToTravel.get(0).getPieceAtField().canMove(fieldsToTravel, true)){
                     temp.swapPieces(fieldsToTravel);
                     temp.makeUnchecking();
                     temp.makeChecking();
@@ -84,7 +84,7 @@ public class CheckmateController {
                 fieldsToTravel.add(temp.findField(knight.myPosition.getHorizontalPosition() + ones[i], knight.myPosition.getVerticalPosition() + twos[j]));
                 if (fieldsToTravel.get(fieldsToTravel.size() - 1) != null) {
                     fieldsToTravel.get(0).getPieceAtField().setChessboard(temp);
-                    if (fieldsToTravel.get(0).getPieceAtField().canMove(fieldsToTravel)) {
+                    if (fieldsToTravel.get(0).getPieceAtField().canMove(fieldsToTravel, true)) {
                         temp.swapPieces(fieldsToTravel);
                         temp.makeUnchecking();
                         temp.makeChecking();
@@ -103,7 +103,7 @@ public class CheckmateController {
                 fieldsToTravel.add(temp.findField(knight.myPosition.getHorizontalPosition() + twos[i], knight.myPosition.getVerticalPosition() + ones[j]));
                 fieldsToTravel.get(0).getPieceAtField().setChessboard(temp);
                 if (fieldsToTravel.get(fieldsToTravel.size() - 1) != null) {
-                    if (fieldsToTravel.get(0).getPieceAtField().canMove(fieldsToTravel)) {
+                    if (fieldsToTravel.get(0).getPieceAtField().canMove(fieldsToTravel, true)) {
                         temp.swapPieces(fieldsToTravel);
                         temp.makeUnchecking();
                         temp.makeChecking();
@@ -127,7 +127,7 @@ public class CheckmateController {
                     fieldsToTravel.add(temp.fields[i]);
                     temp.addFields(fieldsToTravel);
                     fieldsToTravel.get(0).getPieceAtField().setChessboard(temp);
-                    if(fieldsToTravel.get(0).getPieceAtField().canMove(fieldsToTravel)){
+                    if(fieldsToTravel.get(0).getPieceAtField().canMove(fieldsToTravel, true)){
                         temp.swapPieces(fieldsToTravel);
                         temp.makeUnchecking();
                         temp.makeChecking();
@@ -151,7 +151,7 @@ public class CheckmateController {
                     fieldsToTravel.add(temp.fields[i]);
                     temp.addFields(fieldsToTravel);
                     fieldsToTravel.get(0).getPieceAtField().setChessboard(temp);
-                    if(fieldsToTravel.get(0).getPieceAtField().canMove(fieldsToTravel)){
+                    if(fieldsToTravel.get(0).getPieceAtField().canMove(fieldsToTravel, true)){
                         temp.swapPieces(fieldsToTravel);
                         temp.makeUnchecking();
                         temp.makeChecking();
@@ -175,7 +175,7 @@ public class CheckmateController {
                     fieldsToTravel.add(temp.fields[i]);
                     temp.addFields(fieldsToTravel);
                     fieldsToTravel.get(0).getPieceAtField().setChessboard(temp);
-                    if(fieldsToTravel.get(0).getPieceAtField().canMove(fieldsToTravel)){
+                    if(fieldsToTravel.get(0).getPieceAtField().canMove(fieldsToTravel, true)){
                         temp.swapPieces(fieldsToTravel);
                         temp.makeUnchecking();
                         temp.makeChecking();
@@ -205,7 +205,7 @@ public class CheckmateController {
                     temp.addFields(fieldsToTravel);
                     fieldsToTravel.get(0).getPieceAtField().setChessboard(temp);
                     if(fieldsToTravel.get(fieldsToTravel.size()-1).getPieceAtField() == null){
-                        if(fieldsToTravel.get(0).getPieceAtField().canMove(fieldsToTravel)){
+                        if(fieldsToTravel.get(0).getPieceAtField().canMove(fieldsToTravel, true)){
                             temp.swapPieces(fieldsToTravel);
                             temp.makeUnchecking();
                             temp.makeChecking();
@@ -214,7 +214,7 @@ public class CheckmateController {
                         }
                     }
                     else if(fieldsToTravel.get(fieldsToTravel.size()-1).getPieceAtField().getPieceColor() != color){
-                        if(fieldsToTravel.get(0).getPieceAtField().canMove(fieldsToTravel)){
+                        if(fieldsToTravel.get(0).getPieceAtField().canMove(fieldsToTravel, true)){
                             temp.swapPieces(fieldsToTravel);
                             temp.makeUnchecking();
                             temp.makeChecking();

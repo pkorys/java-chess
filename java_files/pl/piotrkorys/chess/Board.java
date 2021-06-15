@@ -7,8 +7,10 @@ public class Board {
     public Board(){
     }
     public Board(Board otherBoard){
-        for(int i =0; i <fields.length; i++)
+        for(int i =0; i <fields.length; i++) {
             this.fields[i] = new Field(otherBoard.fields[i]);
+            this.fields[i].setPieceAtField(otherBoard.fields[i].getPieceAtField());
+        }
     }
 
     public void setFields(){
@@ -126,7 +128,6 @@ public class Board {
         if(getField(move) == null){
             return false;
         }
-
         else if(getField(move).getPieceAtField() != null && getField(move).getPieceAtField().getPieceColor() == color)
             return false;
 
