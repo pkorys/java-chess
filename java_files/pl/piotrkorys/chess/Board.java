@@ -52,15 +52,16 @@ public class Board {
     }
 
     public void printBoard(){
-        System.out.print("   a b c d e f g h");
+        System.out.print("    a   b   c   d   e   f   g   h");
         for(int i = 0; i < 64; i++){
             if(i%8==0){
                 System.out.println();
                 System.out.print((8-i/8) + "  ");
             }
 
+            System.out.print("|");
             fields[i].printPiece();
-            System.out.print(" ");
+            System.out.print("| ");
         }
         System.out.println();
     }
