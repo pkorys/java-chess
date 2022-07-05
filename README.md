@@ -1,6 +1,6 @@
 # Chess in Java
 Primitive chess written by me.
-![alt text](https://github.com/pkorys/java-chess/blop/master/screenshots/chess_printscreen1.png?raw=true)
+![alt text](https://github.com/pkorys/java-chess/blob/master/screenshots/chess_printscreen1.png?raw=true)
 
 
 ## Used to create
