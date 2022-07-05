@@ -7,9 +7,7 @@ public class Knight extends Piece {
 
     @Override
     protected boolean isMoveCorrect(){
-        if(isItProperKnightHorizontalMove() || isItProperKnightVerticalMove())
-            return true;
-        else return false;
+        return isItProperKnightHorizontalMove() || isItProperKnightVerticalMove();
     }
 
     private boolean isItProperKnightVerticalMove(){
@@ -25,15 +23,12 @@ public class Knight extends Piece {
         int[] ones = new int[]{-1, 1};
         int[] twos = new int[]{-2, 2};
 
-        for(int i = 0; i < ones.length; i++){
-            for(int j=0; j< twos.length; j++)
-                checkIfFieldExists(myPosition.getHorizontalPosition()+ones[i], myPosition.getVerticalPosition()+twos[j]);
-        }
-
-        for(int i = 0; i < ones.length; i++){
-            for(int j=0; j< twos.length; j++){
-                checkIfFieldExists(myPosition.getHorizontalPosition()+twos[i], myPosition.getVerticalPosition()+ones[j]);
+        for (int i : ones){
+            for (int j : twos){
+                checkIfFieldExists(myPosition.getHorizontalPosition() + j, myPosition.getVerticalPosition() + i);
+                checkIfFieldExists(myPosition.getHorizontalPosition() + i, myPosition.getVerticalPosition() + j);
             }
         }
+
     }
 }

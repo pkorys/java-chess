@@ -1,16 +1,16 @@
 package pl.piotrkorys.chess;
-import java.util.ArrayList;
+import java.util.List;
 
 public class Piece {
-    private static final String changeTextColorOnWhite = "\u001B[0m";
+    private static final String changeTextColorToWhite = "\u001B[0m";
     private static final String changeTextColorOnBlack = "\u001B[30m";
 
-    private String pieceType;
-    private String pieceColor;
-    private String pieceSymbol;
+    private final String pieceType;
+    private final String pieceColor;
+    private final String pieceSymbol;
     protected static Board chessboard;
     protected Field myPosition;
-    ArrayList<Field> fieldsToMove;
+    List<Field> fieldsToMove;
     private boolean haveMovedBefore;
 
     public Piece(String pieceType, String pieceColor, Field myPosition) {
@@ -19,10 +19,10 @@ public class Piece {
         this.myPosition = myPosition;
         this.haveMovedBefore = false;
 
-        if(pieceColor == "Black")
-            pieceSymbol = changeTextColorOnBlack + pieceType.charAt(0) + changeTextColorOnWhite;
+        if(pieceColor.equals("Black"))
+            pieceSymbol = changeTextColorOnBlack + pieceType.charAt(0) + changeTextColorToWhite;
         else
-            pieceSymbol = changeTextColorOnWhite + pieceType.charAt(0);
+            pieceSymbol = changeTextColorToWhite + pieceType.charAt(0);
     }
 
     public String getPieceColor() {
@@ -49,7 +49,7 @@ public class Piece {
         chessboard = board;
     }
 
-    public boolean isHaveMovedBefore() {
+    public boolean haveMovedBefore() {
         return haveMovedBefore;
     }
 
@@ -61,7 +61,7 @@ public class Piece {
         this.myPosition = myPosition;
     }
 
-    public boolean canMove(ArrayList<Field> fieldsToMove, boolean isItCheckmateTest) {
+    public boolean canMove(List<Field> fieldsToMove, boolean isItCheckmateTest) {
         if(fieldsToMove.get(fieldsToMove.size()-1) == null){
             return false;
         }

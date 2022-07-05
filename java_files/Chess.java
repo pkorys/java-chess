@@ -1,6 +1,7 @@
 //Written by Piotr Korys, Lublin 2021
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import pl.piotrkorys.chess.*;
 
@@ -10,7 +11,7 @@ public class Chess {
     private static String turn;
     private static String piece;
     private static String move;
-    private static ArrayList<Field> fieldsToTravel = new ArrayList<Field>();
+    private static List<Field> fieldsToTravel = new ArrayList<Field>();
 
     public static void main(String[] args) {
         startGame();
@@ -107,7 +108,7 @@ public class Chess {
     }
 
     private static void changeTurn(){
-        if(turn == "White")
+        if(turn.equals("White"))
             turn = "Black";
         else
             turn = "White";

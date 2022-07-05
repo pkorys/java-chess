@@ -191,7 +191,7 @@ public class Board {
         return false;
     }
 
-    public void swapPieces(ArrayList<Field> fieldsToTravel) {
+    public void swapPieces(List<Field> fieldsToTravel) {
         Field lastFieldToTravel = fieldsToTravel.get(fieldsToTravel.size() - 1);
 
         lastFieldToTravel.setPieceAtField(fieldsToTravel.get(0).getPieceAtField());

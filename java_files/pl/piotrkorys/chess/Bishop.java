@@ -7,23 +7,18 @@ public class Bishop extends Piece {
 
     @Override
     protected boolean isMoveCorrect() {
-        if(isBishopMovingDiagonally())
-            return isWayClear();
-        else return false;
+        return isBishopMovingDiagonally() && isWayClear();
     }
 
     private boolean isBishopMovingDiagonally(){
-        if(Math.abs(getMoveInHorizontal()) != Math.abs(getMoveInVertical()))
-            return false;
-        else return true;
+        return Math.abs(getMoveInHorizontal()) == Math.abs(getMoveInVertical());
     }
 
     @Override
     protected void checkFields() {
         int[] ones = new int[]{-1, 1};
-        for (int i = 0; i < ones.length; i++) {
-            for (int j = 0; j < ones.length; j++)
-                checkNextField(ones[i], ones[j]);
+        for (int i : ones) {
+            for (int j : ones) checkNextField(i, j);
         }
     }
 
@@ -38,13 +33,8 @@ public class Bishop extends Piece {
     }
 
     private boolean canGoOnThisField(Field nextField){
-        if(nextField == null)
+        if(nextField == null || chessboard.findField(nextField.getHorizontalPosition(),nextField.getVerticalPosition()) == null)
             return false;
-        if(chessboard.findField(nextField.getHorizontalPosition(),nextField.getVerticalPosition()) == null)
-            return false;
-        else if(nextField.getPieceAtField() == null)
-            return true;
-        else
-            return false;
+        else return nextField.getPieceAtField() == null;
     }
 }
