@@ -1,62 +1,61 @@
 package pl.piotrkorys.chess;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class Board {
     String name;
     public Field[] fields = new Field[64];
-    public Board(){
+
+    public Board() {
+        setFields();
     }
-    public Board(Board otherBoard){
-        for(int i =0; i <fields.length; i++) {
+
+    public Board(Board otherBoard) {
+        for (int i = 0; i < fields.length; i++) {
             this.fields[i] = new Field(otherBoard.fields[i]);
             this.fields[i].setPieceAtField(otherBoard.fields[i].getPieceAtField());
         }
     }
 
-    public void setFields(){
-        for(int i = 0; i < fields.length; i++){
-            fields[i] = new Field((i%8)+1, 8-i/8);
+    public void setFields() {
+        for (int i = 0; i < fields.length; i++) {
+            int x = (i % 8) + 1;
+            int y = 8 - i / 8;
+
+            fields[i] = new Field(x, y);
         }
         setPieces();
     }
 
-    private void setPieces(){
-        for(int i = 0; i < fields.length; i++){
-            if(i==0 || i == 7)
-                fields[i].setPieceAtField(new Rook("Black", fields[i]));
-            else if (i == 56 || i == 63)
-                fields[i].setPieceAtField(new Rook("White", fields[i]));
-            else if (i == 1 || i == 6)
-                fields[i].setPieceAtField(new Knight("Black", fields[i]));
-            else if(i == 57 || i == 62)
-                fields[i].setPieceAtField(new Knight("White", fields[i]));
-            else if(i == 2 || i == 5)
-                fields[i].setPieceAtField(new Bishop("Black", fields[i]));
-            else if(i == 58 || i == 61)
-                fields[i].setPieceAtField(new Bishop("White", fields[i]));
-            else if(i == 3)
-                fields[i].setPieceAtField(new Queen("Black", fields[i]));
-            else if(i == 59)
-                fields[i].setPieceAtField(new Queen("White", fields[i]));
-            else if(i == 4)
-                fields[i].setPieceAtField(new King("Black", fields[i]));
-            else if(i == 60)
-                fields[i].setPieceAtField(new King("White", fields[i]));
-            else if(i > 7 && i < 16)
+    private void setPieces() {
+        for (int i = 0; i < fields.length; i++) {
+            switch (i) {
+                case 0, 7 -> fields[i].setPieceAtField(new Rook("Black", fields[i]));
+                case 1, 6 -> fields[i].setPieceAtField(new Knight("Black", fields[i]));
+                case 2, 5 -> fields[i].setPieceAtField(new Bishop("Black", fields[i]));
+                case 3 -> fields[i].setPieceAtField(new Queen("Black", fields[i]));
+                case 4 -> fields[i].setPieceAtField(new King("Black", fields[i]));
+                case 56, 63 -> fields[i].setPieceAtField(new Rook("White", fields[i]));
+                case 57, 62 -> fields[i].setPieceAtField(new Knight("White", fields[i]));
+                case 58, 61 -> fields[i].setPieceAtField(new Bishop("White", fields[i]));
+                case 59 -> fields[i].setPieceAtField(new Queen("White", fields[i]));
+                case 60 -> fields[i].setPieceAtField(new King("White", fields[i]));
+                default -> fields[i].setPieceAtField(null);
+            }
+            if (i > 7 && i < 16)
                 fields[i].setPieceAtField(new Pawn("Black", fields[i]));
-            else if(i > 47 && i < 56)
+            else if (i > 47 && i < 56)
                 fields[i].setPieceAtField(new Pawn("White", fields[i]));
-            else
-                fields[i].setPieceAtField(null);
         }
     }
 
-    public void printBoard(){
+    public void printBoard() {
         System.out.print("    a   b   c   d   e   f   g   h");
-        for(int i = 0; i < 64; i++){
-            if(i%8==0){
+        for (int i = 0; i < 64; i++) {
+            if (i % 8 == 0) {
                 System.out.println();
-                System.out.print((8-i/8) + "  ");
+                System.out.print((8 - i / 8) + "  ");
             }
 
             System.out.print("|");
@@ -65,175 +64,151 @@ public class Board {
         }
         System.out.println();
     }
-    public Field getField(String pos){
-        int x = getXFromChar(pos.charAt(0));
+
+    public Field getField(String pos) {
+        int x = getXFromChar(pos.toLowerCase().charAt(0));
         int y;
 
-        if(pos.length() > 1)
+        if (pos.length() > 1)
             y = Character.getNumericValue(pos.charAt(1));
         else
             y = -1;
 
-        if(y < 1 || y > 8)
+        if (y < 1 || y > 8)
             y = -1;
 
         return findField(x, y);
     }
 
-    private int getXFromChar(char toGetX){
-        switch (toGetX){
-            case 'a':
-                return  1;
-            case 'b':
-                return  2;
-            case 'c':
-                return 3;
-            case 'd':
-                return  4;
-            case 'e':
-                return  5;
-            case 'f':
-                return  6;
-            case 'g':
-                return  7;
-            case 'h':
-                return 8;
-            default:
-                return -1;
-        }
+    private int getXFromChar(char toGetX) {
+        char charsFromZeroToA = 96;
+        return toGetX >= 97 && toGetX <= 104 ? toGetX - charsFromZeroToA : -1; //if char is in range 'a' to 'h' return char - 96 (1 for a, 2 for b, etc.)
     }
 
-    public Field findField(int x, int y){
-        if(x < 1 || y < 1)
+
+    public Field findField(int x, int y) {
+        if (x < 1 || y < 1)
             return null;
-        else if(x > 8 || y > 8)
+        else if (x > 8 || y > 8)
             return null;
         else
-            return fields[8*(8-y)+x-1];
+            return fields[8 * (8 - y) + x - 1];
     }
 
-    public boolean isMyFigure(String move, String color){
-        if(getField(move) == null || getField(move).getPieceAtField() == null){
-            return false;
-        }
-
-        else if(getField(move).getPieceAtField().getPieceColor() != color){
-            return false;
-        }
-
-        else
-            return true;
+    public boolean isMyFigure(String move, String color) {
+        Field target = getField(move);
+        return target != null && target.getPieceAtField() != null && target.getPieceAtField().getPieceColor().equals(color);
     }
 
-    public boolean canIMoveTo(String move, String color){
-        if(getField(move) == null){
-            return false;
-        }
-        else if(getField(move).getPieceAtField() != null && getField(move).getPieceAtField().getPieceColor() == color)
-            return false;
-
-        else
-            return true;
+    public boolean canIMoveTo(String move, String color) {
+        Field target = getField(move);
+        return target != null && (target.getPieceAtField() == null || !target.getPieceAtField().getPieceColor().equals(color));
     }
 
-    public void makeChecking(){
-        ArrayList<Field> kings = new ArrayList<>();
-        for (int i =0; i < fields.length; i++){
-            if(fields[i].getPieceAtField()!= null){
-                fields[i].getPieceAtField().checkFields();
-                if(fields[i].getPieceAtField().getPieceType() == "King")
-                    kings.add(fields[i]);
+    public void makeChecking() {
+        for (Field field : fields) {
+            if (field.getPieceAtField() != null) {
+                field.getPieceAtField().checkFields();
             }
         }
     }
 
-    public void makeUnchecking(){
-        for (int i =0; i < fields.length; i++){
-           fields[i].removePiecesCheckingMe();
-        }
+    public void makeUnchecking() {
+        for (Field field : fields)
+            field.removePiecesCheckingMe();
     }
 
-    public void addFields(ArrayList<Field> fieldsToTravel) {
+    public void addFields(List<Field> fieldsToTravel) {
         Field firstField = fieldsToTravel.get(0);
-        Field lastField = fieldsToTravel.get(fieldsToTravel.size()-1);
+        Field lastField = fieldsToTravel.get(fieldsToTravel.size() - 1);
         fieldsToTravel.remove(lastField);
+
         int moveInVertical = lastField.getVerticalPosition() - fieldsToTravel.get(0).getVerticalPosition();
         int moveInHorizontal = lastField.getHorizontalPosition() - fieldsToTravel.get(0).getHorizontalPosition();
+        boolean isItDiagonalMove = Math.abs(moveInHorizontal) == Math.abs(moveInVertical);
 
-        if(moveInHorizontal == 0){
-            if(Math.abs(moveInVertical) == moveInVertical)
-                for(int i=1; i <= moveInVertical; i++)
-                    fieldsToTravel.add(findField(firstField.getHorizontalPosition(), firstField.getVerticalPosition()+i));
-                else
-                    for(int i=1; i <=Math.abs(moveInVertical); i++)
-                        fieldsToTravel.add(findField(firstField.getHorizontalPosition(), firstField.getVerticalPosition()-i));
-        }
-        else if(moveInVertical == 0){
-            if(Math.abs(moveInHorizontal) == moveInHorizontal)
-                for(int i=1; i <= moveInHorizontal; i++)
-                    fieldsToTravel.add(findField(firstField.getHorizontalPosition()+i, firstField.getVerticalPosition()));
-            else
-                for(int i=1; i <=Math.abs(moveInHorizontal); i++)
-                    fieldsToTravel.add(findField(firstField.getHorizontalPosition()-i, firstField.getVerticalPosition()));
-        }
-        else if(Math.abs(moveInHorizontal) == Math.abs(moveInVertical)){
-            int verticalDir = moveInVertical / Math.abs(moveInVertical);
-            int horizontalDir = moveInHorizontal / Math.abs(moveInHorizontal);
+        if (moveInHorizontal == 0)
+            addFieldsInHorizontal(fieldsToTravel, firstField, moveInVertical);
+
+        else if (moveInVertical == 0) {
+            addFieldsInVertical(fieldsToTravel, firstField, moveInHorizontal);
+        } else if (isItDiagonalMove) {
+            addFieldsDiagonally(fieldsToTravel, firstField, moveInHorizontal, moveInVertical);
+        } else
+            fieldsToTravel.add(lastField);
+    }
+
+    private void addFieldsInHorizontal(List<Field> fieldsToTravel, Field firstField, int moveInVertical) {
+        if (Math.abs(moveInVertical) == moveInVertical)
+            for (int i = 1; i <= moveInVertical; i++)
+                fieldsToTravel.add(findField(firstField.getHorizontalPosition(), firstField.getVerticalPosition() + i));
+        else
+            for (int i = 1; i <= Math.abs(moveInVertical); i++)
+                fieldsToTravel.add(findField(firstField.getHorizontalPosition(), firstField.getVerticalPosition() - i));
+    }
+
+    private void addFieldsInVertical(List<Field> fieldsToTravel, Field firstField, int moveInHorizontal) {
+        if (Math.abs(moveInHorizontal) == moveInHorizontal)
+            for (int i = 1; i <= moveInHorizontal; i++)
+                fieldsToTravel.add(findField(firstField.getHorizontalPosition() + i, firstField.getVerticalPosition()));
+        else
             for (int i = 1; i <= Math.abs(moveInHorizontal); i++)
-                fieldsToTravel.add(findField(firstField.getHorizontalPosition()+(horizontalDir*i), firstField.getVerticalPosition()+(verticalDir*i)));
-        }
-        else fieldsToTravel.add(lastField);
+                fieldsToTravel.add(findField(firstField.getHorizontalPosition() - i, firstField.getVerticalPosition()));
     }
 
-    private boolean isKingChecked(Field field){
-            if(field.isEnemyChecking(field.getPieceAtField().getPieceColor()))
+    private void addFieldsDiagonally(List<Field> fieldsToTravel, Field firstField, int moveInHorizontal, int moveInVertical) {
+        int verticalDir = moveInVertical / Math.abs(moveInVertical);
+        int horizontalDir = moveInHorizontal / Math.abs(moveInHorizontal);
+
+        for (int i = 1; i <= Math.abs(moveInHorizontal); i++)
+            fieldsToTravel.add(findField(firstField.getHorizontalPosition() + (horizontalDir * i), firstField.getVerticalPosition() + (verticalDir * i)));
+    }
+
+    private boolean isKingChecked(Field field) {
+        String kingsColor = field.getPieceAtField().getPieceColor();
+        return field.isEnemyChecking(kingsColor);
+    }
+
+    public boolean isCheck() {
+        for (Field field : fields) {
+            boolean isKingOnThisField = field.getPieceAtField() != null && field.getPieceAtField().getPieceType().equals("King");
+
+            if (isKingOnThisField) {
+                return isKingChecked(field);
+            }
+        }
+        return false;
+    }
+
+    public boolean isMyKingChecked(String color) {
+        for (Field field : fields) {
+            Piece pieceAtField = field.getPieceAtField();
+            boolean isMyKingChecked = pieceAtField != null && pieceAtField.getPieceType().equals("King") && pieceAtField.getPieceColor().equals(color);
+
+            if (isMyKingChecked)
                 return true;
-            else
-                return false;
-    }
-
-    public boolean isCheck(){
-        for(int i =0; i < fields.length; i++){
-            if(fields[i].getPieceAtField() != null){
-                if(fields[i].getPieceAtField().getPieceType().equals("King"))
-                    if(isKingChecked(fields[i]))
-                        return true;
-            }
         }
         return false;
     }
 
-    public boolean isMyKingChecked(String color){
-        for(int i = 0; i < fields.length; i++){
-            if(fields[i].getPieceAtField() != null){
-                if(fields[i].getPieceAtField().getPieceType().equals("King") && fields[i].getPieceAtField().getPieceColor().equals(color)){
-                    if(isKingChecked(fields[i]))
-                        return true;
-                }
-            }
-        }
-        return false;
-    }
+    public void swapPieces(ArrayList<Field> fieldsToTravel) {
+        Field lastFieldToTravel = fieldsToTravel.get(fieldsToTravel.size() - 1);
 
-    public void swapPieces(ArrayList<Field> fieldsToTravel){
-        fieldsToTravel.get(fieldsToTravel.size()-1).setPieceAtField(fieldsToTravel.get(0).getPieceAtField());
-        fieldsToTravel.get(fieldsToTravel.size()-1).getPieceAtField().setMyPosition(fieldsToTravel.get(fieldsToTravel.size()-1));
+        lastFieldToTravel.setPieceAtField(fieldsToTravel.get(0).getPieceAtField());
+        lastFieldToTravel.getPieceAtField().setMyPosition(lastFieldToTravel);
         fieldsToTravel.get(0).setPieceAtField(null);
     }
 
-    public void fixPositions(){
-        for(int i = 0; i < fields.length; i++){
-            if(fields[i].getPieceAtField() != null)
-                fields[i].getPieceAtField().setMyPosition(fields[i]);
-        }
+    public void fixPositions() {
+        for (Field field : fields)
+            if (field.getPieceAtField() != null)
+                field.getPieceAtField().setMyPosition(field);
     }
 
-    public void removeEnPassant(String color){
-        for (int i =0; i <fields.length; i++){
-            if(fields[i].getEnPassant() != null){
-                if(fields[i].getEnPassant().getPieceColor() == color)
-                    fields[i].setEnPassant(null);
-            }
+    public void removeEnPassant(String color) {
+        for (Field field : fields) {
+            if (field.getEnPassant() != null && field.getEnPassant().getPieceColor().equals(color))
+                field.setEnPassant(null);
         }
     }
 }

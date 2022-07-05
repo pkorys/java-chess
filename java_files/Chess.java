@@ -23,7 +23,6 @@ public class Chess {
     }
 
     private static void startGame(){
-        chessboard.setFields();
         Piece.setChessboard(chessboard);
         turn = "White";
     }

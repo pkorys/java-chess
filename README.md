@@ -2,8 +2,8 @@
 Primitive chess written by me.
 
 ## Used to create
-- InteliJ IDEA Community 2021.1.1
-- JDK 16.0.1
+- InteliJ IDEA Community 2022.1.3
+- JDK 18
 
 ## Guide
 **1.** Run application by double click on _Chess.bat_ <br>

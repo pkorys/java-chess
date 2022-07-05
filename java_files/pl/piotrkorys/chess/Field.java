@@ -1,11 +1,12 @@
 package pl.piotrkorys.chess;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Field {
     private Piece pieceAtField;
     final private int horizontalPosition;
     final private int verticalPosition;
-    private ArrayList<Piece> piecesCheckingMe;
+    private List<Piece> piecesCheckingMe;
     private Pawn enPassant;
 
     public Field(int horizontalPosition, int verticalPosition) {
@@ -30,7 +31,7 @@ public class Field {
         this.enPassant = enPassant;
     }
 
-    public ArrayList<Piece> getPiecesCheckingMe() {
+    public List<Piece> getPiecesCheckingMe() {
         return piecesCheckingMe;
     }
 
@@ -68,8 +69,8 @@ public class Field {
     }
 
     public boolean isEnemyChecking(String myColor){
-        for(int i =0; i < piecesCheckingMe.size(); i++){
-            if(piecesCheckingMe.get(i).getPieceColor() != myColor)
+        for(Piece pieceCheckingMe : piecesCheckingMe){
+            if(pieceCheckingMe.getPieceColor() != myColor)
                 return true;
         }
         return false;
