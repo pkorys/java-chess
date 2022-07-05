@@ -41,7 +41,7 @@ public class King extends Piece {
 
     private boolean canMakeCastling() {
         if (Math.abs(getMoveInHorizontal()) == 2)
-            return areFieldsUnchecked() && canMakeShortCastling() && canMakeLongCastling();
+            return areFieldsUnchecked() && (canMakeShortCastling() || canMakeLongCastling());
 
         return false;
     }
