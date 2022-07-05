@@ -1,6 +1,6 @@
 package pl.piotrkorys.chess;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Board {
@@ -51,7 +51,7 @@ public class Board {
     }
 
     public void printBoard() {
-        System.out.print("    a   b   c   d   e   f   g   h");
+        System.out.print("    a  b  c  d  e  f  g  h");
         for (int i = 0; i < 64; i++) {
             if (i % 8 == 0) {
                 System.out.println();
@@ -60,7 +60,7 @@ public class Board {
 
             System.out.print("|");
             fields[i].printPiece();
-            System.out.print("| ");
+            System.out.print("|");
         }
         System.out.println();
     }
@@ -181,14 +181,16 @@ public class Board {
     }
 
     public boolean isMyKingChecked(String color) {
-        for (Field field : fields) {
-            Piece pieceAtField = field.getPieceAtField();
-            boolean isMyKingChecked = pieceAtField != null && pieceAtField.getPieceType().equals("King") && pieceAtField.getPieceColor().equals(color);
+        Field kingsField = Arrays.stream(fields)
+                .filter(field -> field.getPieceAtField() != null)
+                .filter(field -> field.getPieceAtField().getPieceType().equals("King") && field.getPieceAtField().getPieceColor().equals(color))
+                .findFirst()
+                .get();
 
-            if (isMyKingChecked)
-                return true;
-        }
-        return false;
+        List<Piece> piecesCheckingKing = kingsField.getPiecesCheckingMe();
+
+        return piecesCheckingKing.stream()
+                .anyMatch(piece -> !piece.getPieceColor().equals(color));
     }
 
     public void swapPieces(List<Field> fieldsToTravel) {

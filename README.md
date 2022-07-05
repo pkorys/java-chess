@@ -1,11 +1,15 @@
 # Chess in Java
 Primitive chess written by me.
+![alt text](https://github.com/pkorys/java-chess/screenshots/master/chess_printscreen1.png?raw=true)
+
 
 ## Used to create
-- InteliJ IDEA Community 2022.1.3
+- IntelliJ IDEA Community 2022.1.3
 - JDK 18
 
 ## Guide
+I recomend to use IntelliJ to play this game!
+
 **1.** Run application by double click on _Chess.bat_ <br>
 **2.** Choose piece to move by typing its field (for example: _a2_ to choose white pawn on field _a2_ ).<br>
 &nbsp;&nbsp;&nbsp;**2.1** If you decide to change piece just type **q**. <br>

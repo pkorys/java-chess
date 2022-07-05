@@ -10,34 +10,34 @@ public class CheckmateController {
             if(fields[i].getPieceAtField() != null){
                 if(fields[i].getPieceAtField().getPieceColor().equals(color)){
                     Piece pieceOnField = fields[i].getPieceAtField();
-                    switch (pieceOnField.getPieceType()){
-                        case "pawn":{
-                            if(!isPawnInMate((Pawn) pieceOnField, chessboard, color))
+                    switch (pieceOnField.getPieceType()) {
+                        case "pawn" -> {
+                            if (!isPawnInMate((Pawn) pieceOnField, chessboard, color))
                                 return false;
                             break;
                         }
-                        case "knight":{
-                            if(!isKnightInMate((Knight) pieceOnField, chessboard, color))
+                        case "knight" -> {
+                            if (!isKnightInMate((Knight) pieceOnField, chessboard, color))
                                 return false;
                             break;
                         }
-                        case "bishop":{
-                            if(!isBishopInMate((Bishop) pieceOnField, chessboard, color))
+                        case "bishop" -> {
+                            if (!isBishopInMate((Bishop) pieceOnField, chessboard, color))
                                 return false;
                             break;
                         }
-                        case "rook":{
-                            if(!isRookInMate((Rook) pieceOnField, chessboard, color))
+                        case "rook" -> {
+                            if (!isRookInMate((Rook) pieceOnField, chessboard, color))
                                 return false;
                             break;
                         }
-                        case "queen":{
-                            if(!isQueenInMate((Queen) pieceOnField, chessboard, color))
+                        case "queen" -> {
+                            if (!isQueenInMate((Queen) pieceOnField, chessboard, color))
                                 return false;
                             break;
                         }
-                        case "King":{
-                            if(!isKingInMate((King) pieceOnField, chessboard, color))
+                        case "King" -> {
+                            if (!isKingInMate((King) pieceOnField, chessboard, color))
                                 return false;
                             break;
                         }

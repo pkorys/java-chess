@@ -72,10 +72,8 @@ public class Pawn extends Piece {
 
     @Override
     protected boolean isWayClear() {
-        for (Field field : fieldsToMove) {
-            if (field.getPieceAtField() != null)
-                return false;
-        }
+        if (fieldsToMove.stream().skip(1).anyMatch(field -> field.getPieceAtField() != null))
+            return false;
         if (!haveMovedBefore())
             setHaveMovedBefore(true);
         return true;

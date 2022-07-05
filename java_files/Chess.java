@@ -70,18 +70,18 @@ public class Chess {
                     fieldsToTravel.add(temp.getField(piece));
                     fieldsToTravel.add(temp.getField(move));
                     temp.addFields(fieldsToTravel);
-                    fieldsToTravel.get(0).getPieceAtField().setChessboard(temp);
+                    Piece.setChessboard(temp);
                     temp.swapPieces(fieldsToTravel);
                     temp.makeUnchecking();
                     temp.makeChecking();
                     if(temp.isMyKingChecked(turn)){
-                        fieldsToTravel.get(fieldsToTravel.size()-1).getPieceAtField().setChessboard(chessboard);
+                        Piece.setChessboard(chessboard);
                         chessboard.fixPositions();
                         quitMove();
                     }
                     else {
                         chessboard = temp;
-                        fieldsToTravel.get(fieldsToTravel.size()-1).getPieceAtField().setChessboard(chessboard);
+                        Piece.setChessboard(chessboard);
                         if(fieldsToTravel.get(fieldsToTravel.size()-1).getPieceAtField() instanceof Pawn){
                             if(((Pawn)fieldsToTravel.get(fieldsToTravel.size()-1).getPieceAtField()).canPromote())
                                 ((Pawn) fieldsToTravel.get(fieldsToTravel.size()-1).getPieceAtField()).pawnPromotion();
