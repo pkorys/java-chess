@@ -45,11 +45,12 @@ public class Pawn extends Piece {
     }
 
     private boolean canCapture() {
-        if (destinationField.getPieceAtField() == null && destinationField.getEnPassant() != null) {
-            chessboard.findField(myPosition.getHorizontalPosition() + getMoveInHorizontal(), myPosition.getVerticalPosition()).setPieceAtField(null);
+        if(destinationField.getPieceAtField() != null && getMoveInVertical() == moveDirection && Math.abs(getMoveInHorizontal()) == 1) {
+            if(canPromote())
+                pawnPromotion();
             return true;
         }
-        return getMoveInVertical() == moveDirection && Math.abs(getMoveInHorizontal()) == 1;
+        else return false;
     }
 
     public void pawnPromotion() {

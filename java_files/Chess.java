@@ -18,6 +18,10 @@ public class Chess {
         do{
             playRound();
         }while(!chessboard.isCheck() || !CheckmateController.isCheckMate(chessboard, turn));
+        endGame();
+    }
+
+    private static void endGame(){
         chessboard.printBoard();
         changeTurn();
         System.out.println("Checkmate! " + turn + " wins!");

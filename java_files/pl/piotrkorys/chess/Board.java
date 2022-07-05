@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Board {
     String name;
-    public Field[] fields = new Field[64];
+    private Field[] fields = new Field[64];
 
     public Board() {
         setFields();
@@ -173,9 +173,8 @@ public class Board {
         for (Field field : fields) {
             boolean isKingOnThisField = field.getPieceAtField() != null && field.getPieceAtField().getPieceType().equals("King");
 
-            if (isKingOnThisField) {
+            if (isKingOnThisField)
                 return isKingChecked(field);
-            }
         }
         return false;
     }
@@ -202,9 +201,9 @@ public class Board {
     }
 
     public void fixPositions() {
-        for (Field field : fields)
-            if (field.getPieceAtField() != null)
-                field.getPieceAtField().setMyPosition(field);
+        Arrays.stream(fields)
+                .filter(field -> field.getPieceAtField() != null)
+                .forEach(field -> field.getPieceAtField().setMyPosition(field));
     }
 
     public void removeEnPassant(String color) {
@@ -212,5 +211,9 @@ public class Board {
             if (field.getEnPassant() != null && field.getEnPassant().getPieceColor().equals(color))
                 field.setEnPassant(null);
         }
+    }
+
+    public Field[] getFields() {
+        return fields;
     }
 }
